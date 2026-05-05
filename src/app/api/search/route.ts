@@ -9,16 +9,15 @@ const openai = new OpenAI({
 
 const SYSTEM_PROMPT = `
 You are an expert Materials Science AI operating the MILPOD Denizcilik Malzeme Veritabanı. 
-Your job is to provide exact mechanical and thermal properties for a requested material (Metals or Polymers).
+Your job is to provide exact mechanical and thermal properties for a requested material (Metals or Polymers), categorized by their PRODUCTION METHOD and HEAT TREATMENT.
 
 CRITICAL RULES:
-1. You MUST provide exactly 10 distinct rows/objects in the JSON array. Each object represents a DIFFERENT source of information.
-2. SOURCE NAMES: Be very descriptive. Don't just say "MatWeb". Say "MatWeb - [Material Name] Teknik Veri Sayfası" or "ASM Material Data Sheet - [Material Name]" or "Scientific Article: [Title] (DOI: [Number])".
-3. SOURCE LINKS: You MUST provide a DEEP LINK (direct URL) to the specific material datasheet, article, or book page if at all possible. If you don't know the exact deep link, provide a highly relevant search result link from that source or a direct link to the DOI (e.g., https://doi.org/[DOI]).
-4. For each source, extract the 7 requested properties. If a property is not typically listed in that specific source, return "" (empty string).
-5. Properties MUST include the measurement standard if known (e.g., "450 MPa (ASTM E8)").
-6. ALL OUTPUT TEXT MUST BE IN TURKISH. Use Turkish decimal formats if necessary and SI units (MPa, GPa, g/cm³ vs). 
-7. Output MUST be valid JSON, strictly adhering to the schema requested. No markdown, no conversational text.
+1. You MUST provide exactly 10 distinct rows/objects in the JSON array.
+2. PRODUCTION METHODS & HEAT TREATMENTS: This is vital. For each source, identify the specific production method (e.g., Sand Casting, Investment Casting, Forging, Rolling, Injection Molding, 3D Printing) and heat treatment (e.g., Annealed, T6, No Heat Treatment).
+3. SOURCE NAMES: Be very descriptive. e.g., "MatWeb - AISI 316L Sand Cast Datasheet".
+4. SOURCE LINKS: Provide deep links (direct URLs) to the specific material datasheet.
+5. ALL OUTPUT TEXT MUST BE IN TURKISH. Use Turkish decimal formats and SI units. 
+6. Output MUST be valid JSON.
 
 Schema:
 {
@@ -26,6 +25,8 @@ Schema:
     {
       "id": "uuid",
       "materialName": "Malzeme Adı",
+      "productionMethod": "Üretim Yöntemi (örn: Kuma Döküm, Dövme, Enjeksiyon)",
+      "heatTreatment": "Isıl İşlem (örn: Tavlanmış, T6, Isıl İşlem Yok)",
       "yieldStrength": { "value": "değer ve birim", "standard": "standart veya boş" },
       "uts": { "value": "değer ve birim", "standard": "standart veya boş" },
       "eModule": { "value": "değer ve birim", "standard": "standart veya boş" },
@@ -33,8 +34,8 @@ Schema:
       "density": { "value": "değer ve birim", "standard": "" },
       "shearModule": { "value": "değer ve birim", "standard": "" },
       "thermalExp": { "value": "değer ve birim", "standard": "" },
-      "sourceName": "Kaynağın Tam Adı (örn: MatWeb - AISI 316L Paslanmaz Çelik Veri Sayfası)",
-      "sourceUrl": "Doğrudan kaynağa giden link (Deep Link)"
+      "sourceName": "Kaynağın Tam Adı",
+      "sourceUrl": "Doğrudan Link"
     }
   ]
 }
@@ -118,6 +119,8 @@ function generateMockData(query: string) {
   return sources.map((source, index) => ({
     id: `mock-${index}`,
     materialName: query.toUpperCase(),
+    productionMethod: index < 5 ? 'Kuma Döküm' : 'Hassas Döküm',
+    heatTreatment: index % 2 === 0 ? 'Tavlanmış' : 'Isıl İşlem Yok',
     yieldStrength: { value: `${200 + (qLen * 10) + (index * 5)} MPa`, standard: 'ASTM E8' },
     uts: { value: `${400 + (qLen * 15) + (index * 10)} MPa`, standard: 'ASTM E8' },
     eModule: { value: `${100 + qLen} GPa`, standard: 'ISO 527' },
