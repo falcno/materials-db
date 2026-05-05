@@ -75,8 +75,19 @@ export async function POST(req: Request) {
     const resultText = completion.choices[0].message.content;
     if (!resultText) throw new Error("Yapay zekadan boş yanıt geldi");
 
-    const resultJson = JSON.parse(resultText);
-    return NextResponse.json({ data: resultJson.data });
+    try {
+      const resultJson = JSON.parse(resultText);
+      if (resultJson && resultJson.data) {
+        return NextResponse.json({ data: resultJson.data });
+      } else if (Array.isArray(resultJson)) {
+        return NextResponse.json({ data: resultJson });
+      } else {
+        throw new Error("JSON formatı geçersiz (data anahtarı bulunamadı)");
+      }
+    } catch (parseError) {
+      console.error('Parse Hatası:', parseError, 'Gelen Metin:', resultText);
+      throw new Error("Yapay zeka yanıtı okunabilir bir tabloya dönüştürülemedi.");
+    }
 
   } catch (error: any) {
     console.error('API Hatası:', error);
