@@ -26,7 +26,7 @@ export default function Home() {
       });
 
       if (!response.ok) {
-        let errorMsg = 'Failed to fetch data';
+        let errorMsg = 'Veri çekilirken bir hata oluştu';
         try {
           const errData = await response.json();
           if (errData.error) errorMsg = errData.error;
@@ -48,9 +48,9 @@ export default function Home() {
       <Header />
       <main className={styles.main}>
         <div className={styles.hero}>
-          <h1 className={styles.title}>Marine Material Database</h1>
+          <h1 className={styles.title}>Denizcilik Malzeme Veritabanı</h1>
           <p className={styles.subtitle}>
-            Search across multiple engineering and scientific sources to find precise material properties, standards, and references instantly.
+            Mühendislik ve bilimsel kaynakları tarayarak malzeme özelliklerini, standartları ve referansları anında bulun.
           </p>
         </div>
 
@@ -59,7 +59,7 @@ export default function Home() {
         {isLoading && (
           <div className={styles.loader}>
             <div className={styles.spinner}></div>
-            <p>Scanning literature and databases... This might take a few seconds as we gather multiple sources.</p>
+            <p>Literatür ve veritabanları taranıyor... Birden fazla kaynak toplandığı için bu işlem birkaç saniye sürebilir.</p>
           </div>
         )}
 

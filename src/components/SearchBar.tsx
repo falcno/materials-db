@@ -58,7 +58,7 @@ export default function SearchBar({ onSearch, isLoading }: SearchBarProps) {
         <input
           type="text"
           className={styles.input}
-          placeholder="Search materials (e.g. 316L, Delrin)..."
+          placeholder="Malzeme ara (örn. 316L, Delrin)..."
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
@@ -68,7 +68,7 @@ export default function SearchBar({ onSearch, isLoading }: SearchBarProps) {
           disabled={isLoading}
         />
         <button type="submit" className={styles.button} disabled={isLoading || !query.trim()}>
-          {isLoading ? 'Searching...' : 'Search'}
+          {isLoading ? 'Aranıyor...' : 'Ara'}
         </button>
       </form>
 

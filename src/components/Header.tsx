@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './Header.module.css';
-import { Anchor } from 'lucide-react';
 
 export default function Header() {
   return (
@@ -8,7 +7,6 @@ export default function Header() {
       <div className={styles.logoContainer}>
         {/* Placeholder for actual MILPOD logo */}
         <div className={styles.logo}>
-          <Anchor size={28} />
           MILPOD
         </div>
         
@@ -19,7 +17,7 @@ export default function Header() {
       </div>
       
       <div className={styles.title}>
-        Marine Material Database
+        Denizcilik Malzeme Veritabanı
       </div>
     </header>
   );

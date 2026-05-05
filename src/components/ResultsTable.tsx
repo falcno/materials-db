@@ -43,15 +43,15 @@ export default function ResultsTable({ data }: ResultsTableProps) {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th className={styles.th}>Material</th>
-            <th className={styles.th}>Yield Strength</th>
-            <th className={styles.th}>Ult. Tensile Strength</th>
-            <th className={styles.th}>E-Module</th>
-            <th className={styles.th}>Poisson Value</th>
-            <th className={styles.th}>Density</th>
-            <th className={styles.th}>Shear Module</th>
-            <th className={styles.th}>Thermal Exp.</th>
-            <th className={styles.th}>Source</th>
+            <th className={styles.th}>Malzeme</th>
+            <th className={styles.th}>Akma Dayanımı</th>
+            <th className={styles.th}>Çekme Dayanımı</th>
+            <th className={styles.th}>Elastisite Modülü</th>
+            <th className={styles.th}>Poisson Oranı</th>
+            <th className={styles.th}>Yoğunluk</th>
+            <th className={styles.th}>Kayma Modülü</th>
+            <th className={styles.th}>Termal Genleşme</th>
+            <th className={styles.th}>Kaynak</th>
           </tr>
         </thead>
         <tbody>

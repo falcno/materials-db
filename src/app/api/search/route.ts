@@ -5,89 +5,91 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || 'dummy_key',
 });
 
-// Create a system prompt that strictly enforces the JSON schema and 10 sources rule.
 const SYSTEM_PROMPT = `
-You are an expert Materials Science AI operating the MILPOD Marine Material Database. 
+You are an expert Materials Science AI operating the MILPOD Denizcilik Malzeme Veritabanı. 
 Your job is to provide exact mechanical and thermal properties for a requested material (Metals or Polymers).
 
 CRITICAL RULES:
-1. You MUST provide exactly 10 distinct rows/objects in the JSON array. Each object represents a DIFFERENT source of information (e.g., MatWeb, ASM Material Data Sheet, AZoM, MakeItFrom, specific textbook excerpts, supplier data sheets like Xometry or Protolabs, or specific ISO/ASTM standards).
+1. You MUST provide exactly 10 distinct rows/objects in the JSON array. Each object represents a DIFFERENT source of information (e.g., MatWeb, ASM Material Data Sheet, AZoM, MakeItFrom, textbook excerpts, supplier data sheets, specific ISO/ASTM standards).
 2. For each source, extract the 7 requested properties. If a property is not typically listed in that specific source, return "" (empty string).
 3. Properties MUST include the measurement standard if known (e.g., "450 MPa (ASTM E8)").
-4. Output MUST be valid JSON, strictly adhering to the schema requested. No markdown, no conversational text.
+4. ALL OUTPUT TEXT MUST BE IN TURKISH. Use Turkish decimal formats if necessary and SI units (MPa, GPa, g/cm³ vs). 
+5. Output MUST be valid JSON, strictly adhering to the schema requested. No markdown, no conversational text.
 
 Schema:
 {
   "data": [
     {
       "id": "uuid",
-      "materialName": "Name of Material",
-      "yieldStrength": { "value": "value with units", "standard": "standard or empty" },
-      "uts": { "value": "value with units", "standard": "standard or empty" },
-      "eModule": { "value": "value with units", "standard": "standard or empty" },
-      "poisson": { "value": "value", "standard": "" },
-      "density": { "value": "value with units", "standard": "" },
-      "shearModule": { "value": "value with units", "standard": "" },
-      "thermalExp": { "value": "value with units", "standard": "" },
-      "sourceName": "Name of the Source (e.g., MatWeb)",
-      "sourceUrl": "URL if applicable, otherwise empty"
+      "materialName": "Malzeme Adı",
+      "yieldStrength": { "value": "değer ve birim", "standard": "standart veya boş" },
+      "uts": { "value": "değer ve birim", "standard": "standart veya boş" },
+      "eModule": { "value": "değer ve birim", "standard": "standart veya boş" },
+      "poisson": { "value": "değer", "standard": "" },
+      "density": { "value": "değer ve birim", "standard": "" },
+      "shearModule": { "value": "değer ve birim", "standard": "" },
+      "thermalExp": { "value": "değer ve birim", "standard": "" },
+      "sourceName": "Kaynak Adı (örn: MatWeb)",
+      "sourceUrl": "URL varsa URL, yoksa boş"
     }
   ]
 }
 `;
 
 export async function POST(req: Request) {
+  let userQuery = 'Bilinmeyen Malzeme';
+  
   try {
-    const { query } = await req.json();
-
-    if (!query) {
-      return NextResponse.json({ error: 'Query is required' }, { status: 400 });
+    const json = await req.json();
+    if (json.query) {
+      userQuery = json.query;
     }
 
-    // If no API key is provided, we return mock data for demonstration purposes
+    if (!userQuery) {
+      return NextResponse.json({ error: 'Arama sorgusu gerekli' }, { status: 400 });
+    }
+
     if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === 'dummy_key') {
-      console.warn('No OpenAI API Key found. Returning mock data.');
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate delay
-      return NextResponse.json({ data: generateMockData(query) });
+      console.warn('OpenAI API Key bulunamadı. Örnek veri döndürülüyor.');
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      return NextResponse.json({ data: generateMockData(userQuery) });
     }
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-2024-08-06',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: `Retrieve properties for: ${query}. Remember, exactly 10 different sources.` }
+        { role: 'user', content: `Şu malzeme için özellikleri getir: ${userQuery}. Unutma, tam 10 farklı kaynak olmak zorunda.` }
       ],
       response_format: { type: "json_object" },
       temperature: 0.2,
     });
 
     const resultText = completion.choices[0].message.content;
-    if (!resultText) throw new Error("Empty response from AI");
+    if (!resultText) throw new Error("Yapay zekadan boş yanıt geldi");
 
     const resultJson = JSON.parse(resultText);
-
     return NextResponse.json({ data: resultJson.data });
 
   } catch (error: any) {
-    console.error('Error in search API:', error);
-    // Fallback to mock data if the API fails (e.g., due to invalid API key or network issue)
-    console.warn('Falling back to mock data due to error.');
-    return NextResponse.json({ data: generateMockData(query) });
+    console.error('API Hatası:', error);
+    console.warn('Hatadan dolayı örnek veriye (fallback) geçiliyor.');
+    return NextResponse.json({ data: generateMockData(userQuery) });
   }
 }
 
 function generateMockData(query: string) {
   const sources = [
     { name: 'MatWeb', url: 'https://www.matweb.com' },
-    { name: 'ASM Aerospace Specification Metals', url: 'https://aerospacemetals.com' },
+    { name: 'ASM Malzeme Veri Sayfası', url: 'https://aerospacemetals.com' },
     { name: 'AZoM - Materials', url: 'https://www.azom.com' },
     { name: 'MakeItFrom', url: 'https://www.makeitfrom.com' },
-    { name: 'Supplier Data Sheet (Protolabs)', url: 'https://www.protolabs.com' },
-    { name: 'Handbook of Materials (Smith)', url: '' },
-    { name: 'ISO 6892-1 Technical Report', url: '' },
-    { name: 'Engineering Toolbox', url: 'https://www.engineeringtoolbox.com' },
-    { name: 'Supplier Data Sheet (Xometry)', url: 'https://www.xometry.com' },
-    { name: 'NIST Property Database', url: 'https://www.nist.gov' },
+    { name: 'Tedarikçi Veri Föyü (Protolabs)', url: 'https://www.protolabs.com' },
+    { name: 'Malzeme El Kitabı (Smith)', url: '' },
+    { name: 'ISO 6892-1 Teknik Raporu', url: '' },
+    { name: 'Mühendislik Araç Kutusu', url: 'https://www.engineeringtoolbox.com' },
+    { name: 'Tedarikçi Veri Föyü (Xometry)', url: 'https://www.xometry.com' },
+    { name: 'NIST Özellikler Veritabanı', url: 'https://www.nist.gov' },
   ];
 
   return sources.map((source, index) => ({
