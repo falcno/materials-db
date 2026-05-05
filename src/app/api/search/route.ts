@@ -1,9 +1,8 @@
 import { NextResponse } from 'next/server';
-import OpenAI from 'openai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || 'dummy_key',
-});
+// Initialize Google Gemini API
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'dummy_key');
 
 const SYSTEM_PROMPT = `
 You are an expert Materials Science AI operating the MILPOD Denizcilik Malzeme Veritabanı. 
@@ -49,26 +48,28 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Arama sorgusu gerekli' }, { status: 400 });
     }
 
-    if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === 'dummy_key') {
-      console.warn('OpenAI API Key bulunamadı. Örnek veri döndürülüyor.');
+    if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'dummy_key') {
+      console.warn('GEMINI API Key bulunamadı. Örnek veri döndürülüyor.');
       await new Promise((resolve) => setTimeout(resolve, 2000));
       return NextResponse.json({ 
-        warning: 'Sistemde OPENAI_API_KEY bulunamadığı için gerçek yapay zeka araması yapılamıyor. Aşağıdaki veriler temsilidir.',
+        warning: 'Sistemde GEMINI_API_KEY bulunamadığı için gerçek yapay zeka araması yapılamıyor. Aşağıdaki veriler temsilidir.',
         data: generateMockData(userQuery) 
       });
     }
 
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-2024-08-06',
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: `Şu malzeme için özellikleri getir: ${userQuery}. Unutma, tam 10 farklı kaynak olmak zorunda.` }
-      ],
-      response_format: { type: "json_object" },
-      temperature: 0.2,
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-1.5-flash",
+      generationConfig: {
+        responseMimeType: "application/json",
+        temperature: 0.2,
+      }
     });
 
-    const resultText = completion.choices[0].message.content;
+    const prompt = `${SYSTEM_PROMPT}\n\nKullanıcı sorgusu: Şu malzeme için özellikleri getir: ${userQuery}. Unutma, tam 10 farklı kaynak olmak zorunda.`;
+    
+    const result = await model.generateContent(prompt);
+    const resultText = result.response.text();
+    
     if (!resultText) throw new Error("Yapay zekadan boş yanıt geldi");
 
     const resultJson = JSON.parse(resultText);
@@ -78,7 +79,7 @@ export async function POST(req: Request) {
     console.error('API Hatası:', error);
     console.warn('Hatadan dolayı örnek veriye (fallback) geçiliyor.');
     return NextResponse.json({ 
-      warning: `Yapay zeka servisi hata verdi (Muhtemelen API kotası veya geçersiz Key). Hata: ${error.message}. Temsili veriler gösteriliyor.`,
+      warning: `Yapay zeka servisi hata verdi (Hata: ${error.message}). Temsili veriler gösteriliyor.`,
       data: generateMockData(userQuery) 
     });
   }
