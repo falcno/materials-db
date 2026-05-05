@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-// Initialize Groq via OpenAI SDK
+// Initialize Groq via OpenAI SDK - Stable Free Tier
 const openai = new OpenAI({
   apiKey: process.env.GROQ_API_KEY || 'dummy_key',
   baseURL: "https://api.groq.com/openai/v1",
