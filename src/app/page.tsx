@@ -10,10 +10,12 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<SourceData[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
 
   const handleSearch = async (query: string) => {
     setIsLoading(true);
     setError(null);
+    setWarning(null);
     setData([]);
 
     try {
@@ -36,6 +38,7 @@ export default function Home() {
 
       const result = await response.json();
       setData(result.data);
+      if (result.warning) setWarning(result.warning);
     } catch (err: any) {
       setError(err.message || 'An error occurred while searching.');
     } finally {
@@ -60,6 +63,12 @@ export default function Home() {
           <div className={styles.loader}>
             <div className={styles.spinner}></div>
             <p>Literatür ve veritabanları taranıyor... Birden fazla kaynak toplandığı için bu işlem birkaç saniye sürebilir.</p>
+          </div>
+        )}
+
+        {warning && !isLoading && (
+          <div style={{ background: 'rgba(255, 165, 0, 0.1)', color: '#cc7700', padding: '1rem', borderRadius: '8px', textAlign: 'center', marginBottom: '2rem', border: '1px solid orange' }}>
+            <strong>DİKKAT:</strong> {warning}
           </div>
         )}
 

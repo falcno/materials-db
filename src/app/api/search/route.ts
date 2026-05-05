@@ -52,7 +52,10 @@ export async function POST(req: Request) {
     if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === 'dummy_key') {
       console.warn('OpenAI API Key bulunamadı. Örnek veri döndürülüyor.');
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      return NextResponse.json({ data: generateMockData(userQuery) });
+      return NextResponse.json({ 
+        warning: 'Sistemde OPENAI_API_KEY bulunamadığı için gerçek yapay zeka araması yapılamıyor. Aşağıdaki veriler temsilidir.',
+        data: generateMockData(userQuery) 
+      });
     }
 
     const completion = await openai.chat.completions.create({
@@ -74,7 +77,10 @@ export async function POST(req: Request) {
   } catch (error: any) {
     console.error('API Hatası:', error);
     console.warn('Hatadan dolayı örnek veriye (fallback) geçiliyor.');
-    return NextResponse.json({ data: generateMockData(userQuery) });
+    return NextResponse.json({ 
+      warning: `Yapay zeka servisi hata verdi (Muhtemelen API kotası veya geçersiz Key). Hata: ${error.message}. Temsili veriler gösteriliyor.`,
+      data: generateMockData(userQuery) 
+    });
   }
 }
 
@@ -92,16 +98,18 @@ function generateMockData(query: string) {
     { name: 'NIST Özellikler Veritabanı', url: 'https://www.nist.gov' },
   ];
 
+  const qLen = query.length || 5;
+
   return sources.map((source, index) => ({
     id: `mock-${index}`,
     materialName: query.toUpperCase(),
-    yieldStrength: { value: '250 MPa', standard: 'ASTM E8' },
-    uts: { value: '500 MPa', standard: 'ASTM E8' },
-    eModule: { value: '200 GPa', standard: 'ISO 527' },
-    poisson: { value: '0.3', standard: '' },
-    density: { value: '7.8 g/cm³', standard: '' },
-    shearModule: { value: '80 GPa', standard: '' },
-    thermalExp: { value: index % 2 === 0 ? '11 µm/m-K' : '', standard: '' },
+    yieldStrength: { value: \`\${200 + (qLen * 10) + (index * 5)} MPa\`, standard: 'ASTM E8' },
+    uts: { value: \`\${400 + (qLen * 15) + (index * 10)} MPa\`, standard: 'ASTM E8' },
+    eModule: { value: \`\${100 + qLen} GPa\`, standard: 'ISO 527' },
+    poisson: { value: \`0.\${25 + (qLen % 10)}\`, standard: '' },
+    density: { value: \`\${(2 + (qLen % 6)).toFixed(1)} g/cm³\`, standard: '' },
+    shearModule: { value: \`\${40 + qLen} GPa\`, standard: '' },
+    thermalExp: { value: index % 2 === 0 ? \`\${10 + (qLen % 5)} µm/m-K\` : '', standard: '' },
     sourceName: source.name,
     sourceUrl: source.url,
   }));
