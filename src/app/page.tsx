@@ -26,7 +26,12 @@ export default function Home() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch data');
+        let errorMsg = 'Failed to fetch data';
+        try {
+          const errData = await response.json();
+          if (errData.error) errorMsg = errData.error;
+        } catch (e) {}
+        throw new Error(errorMsg);
       }
 
       const result = await response.json();

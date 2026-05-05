@@ -4,7 +4,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import styles from './SearchBar.module.css';
 import { Search } from 'lucide-react';
 
-const SUGGESTIONS = ['316L', 'AlSi10Mg7', 'Delrin', 'HDPE-100', 'Cu3'];
+const SUGGESTIONS = [
+  '316L Stainless Steel', 'AlSi10Mg7', 'Delrin (POM)', 'HDPE-100', 'Cu3',
+  'Titanium Ti-6Al-4V', 'Aluminum 6061-T6', 'Carbon Steel A36', 'Nylon 6/6',
+  'Polycarbonate (PC)', 'ABS Plastic', 'Brass (C36000)', 'Bronze (C93200)',
+  'Teflon (PTFE)', 'PVC', 'Graphene', 'Inconel 718', 'Copper (C11000)',
+  'Epoxy Resin', 'Kevlar', 'Silicone Rubber'
+];
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
