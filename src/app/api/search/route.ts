@@ -55,7 +55,7 @@ export async function POST(req: Request) {
 
     if (!process.env.GROQ_API_KEY || process.env.GROQ_API_KEY === 'dummy_key') {
       console.warn('GROQ_API_KEY bulunamadı. Örnek veri döndürülüyor.');
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 500)); // Reduced delay
       return NextResponse.json({ 
         warning: 'Sistemde GROQ_API_KEY bulunamadığı için gerçek yapay zeka araması yapılamıyor. Aşağıdaki veriler temsilidir.',
         data: generateMockData(userQuery) 
