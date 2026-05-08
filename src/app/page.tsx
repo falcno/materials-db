@@ -47,6 +47,7 @@ export default function Home() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ query }),
+        cache: 'no-store',
       });
 
       if (!response.ok) {
