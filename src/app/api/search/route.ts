@@ -18,14 +18,12 @@ SOURCE PRIORITY:
 4. Verified Manufacturer Technical Datasheets.
 
 CRITICAL RULES:
-1. DATA RANGES: If a source provides a range (e.g., 240-260 MPa), you MUST report the range as "240-260 MPa". DO NOT average it.
-2. CITATIONS: 
-   - For Research Papers: Provide the full title and DOI in the sourceName/sourceUrl fields.
-   - For Books: Provide "Title, Author, Edition (Page/Section if known)".
-3. ACCURACY: Ensure values match the production method (e.g., Cast vs Wrought) and heat treatment (e.g., T6, Annealed).
-4. QUANTITY: Provide exactly 10 distinct sources.
-5. LANGUAGE: All output text (except titles/DOIs) MUST be in Turkish. Use comma as decimal separator.
-6. TURKISH TERMS: Use "Kuma Döküm", "Dövme", "Haddeleme", "Tavlanmış", "Isıl İşlem Yok" etc.
+1. STRICT HALLUCINATION PREVENTION: Use ONLY the provided SEARCH RESULTS. If a property (e.g., Yield Strength) is not explicitly mentioned in the context for the specific material, DO NOT make it up. Omit the row or the value.
+2. DATA RANGES: Report ranges exactly as found (e.g., "240-260 MPa").
+3. IDENTITY MATCH: Before extracting data, confirm the search result is actually about the requested material. Do not confuse 304 with 316, or AlSi10Mg with pure Aluminum.
+4. CITATIONS: Provide DOI if available. For books, provide Title and Page.
+5. QUALITY OVER QUANTITY: If you only find 2 reliable sources, provide only 2 rows. DO NOT try to fill 10 rows if data is missing.
+6. TURKISH TERMS: Use "Kuma Döküm", "Dövme", "Tavlanmış" etc.
 7. Output MUST be valid JSON format.
 
 Schema (JSON):
@@ -103,17 +101,28 @@ export async function POST(req: Request) {
     const searchResults = await searchWeb(userQuery);
     const context = searchResults 
       ? JSON.stringify(searchResults.map((r: any) => ({ title: r.title, url: r.url, content: r.content })))
-      : "No real-time search results available. Use internal knowledge but prioritize deep links.";
+      : "No real-time search results available. STOP and return empty or warning.";
 
-    // Step 2: Generate properties using LLM
+    // Step 2: Generate properties using LLM with ZERO HALLUCINATION policy
     const completion = await openai.chat.completions.create({
       model: 'llama-3.3-70b-versatile',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: `SEARCH RESULTS:\n${context}\n\nMALZEME: ${userQuery}. Yukarıdaki arama sonuçlarını kullanarak tam 10 farklı satır veriyi JSON formatında getir.` }
+        { role: 'user', content: `
+SEARCH RESULTS:
+${context}
+
+MALZEME: ${userQuery}
+
+TALİMAT: 
+1. Sadece yukarıdaki SEARCH RESULTS içinde geçen verileri kullan. 
+2. Eğer veri sonuçlarda yoksa ASLA uydurma.
+3. Malzeme adı uyuşmuyorsa o kaynağı kullanma.
+4. En fazla 10, en az 1 satır getir (ne kadar güvenilir veri varsa o kadar).
+5. JSON formatında yanıt ver.` }
       ],
       response_format: { type: "json_object" },
-      temperature: 0.1, // Lower temperature for more consistent extraction
+      temperature: 0, // Deterministic output
     });
 
     const resultText = completion.choices[0].message.content;
@@ -121,16 +130,16 @@ export async function POST(req: Request) {
 
     try {
       const resultJson = JSON.parse(resultText);
-      if (resultJson && resultJson.data) {
-        return NextResponse.json({ data: resultJson.data });
-      } else if (Array.isArray(resultJson)) {
-        return NextResponse.json({ data: resultJson });
-      } else {
-        throw new Error("JSON formatı geçersiz (data anahtarı bulunamadı)");
-      }
+      return new NextResponse(JSON.stringify({ data: resultJson.data || resultJson }), {
+        status: 200,
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        },
+      });
     } catch (parseError) {
-      console.error('Parse Hatası:', parseError, 'Gelen Metin:', resultText);
-      throw new Error("Yapay zeka yanıtı okunabilir bir tabloya dönüştürülemedi.");
+      throw new Error("Yapay zeka yanıtı okunamadı.");
     }
 
   } catch (error: any) {
