@@ -15,163 +15,34 @@ export const PREDEFINED_MATERIALS: MaterialCategory[] = [
     materials: [
       {
         name: 'AlSi10Mg',
-        alternateNames: ['EN AC-43000', '3.2381'],
+        alternateNames: ['EN AC-43000', '3.2381', 'A360'],
         data: [
-          {
-            id: 'alsi10mg-slm',
-            materialName: 'AlSi10Mg',
-            productionMethod: 'Katmanlı Üretim (SLM/DMLS)',
-            heatTreatment: 'Gerilim Giderme',
-            yieldStrength: { value: '230-270 MPa', standard: 'ASTM F3318' },
-            uts: { value: '340-400 MPa', standard: 'ASTM F3318' },
-            eModule: { value: '70-75 GPa', standard: '' },
-            poisson: { value: '0.33', standard: '' },
-            density: { value: '2.68 g/cm³', standard: '' },
-            shearModule: { value: '26 GPa', standard: '' },
-            thermalExp: { value: '23 µm/m-K', standard: '' },
-            sourceName: 'EOS - AlSi10Mg Material Data Sheet',
-            sourceUrl: 'https://www.eos.info/en/materials/metal/aluminum/alsi10mg'
-          },
-          {
-            id: 'alsi10mg-cast',
-            materialName: 'AlSi10Mg',
-            productionMethod: 'Kuma Döküm',
-            heatTreatment: 'F (As Cast)',
-            yieldStrength: { value: '80-110 MPa', standard: 'EN 1706' },
-            uts: { value: '160-200 MPa', standard: 'EN 1706' },
-            eModule: { value: '71 GPa', standard: '' },
-            poisson: { value: '0.33', standard: '' },
-            density: { value: '2.65 g/cm³', standard: '' },
-            shearModule: { value: '26 GPa', standard: '' },
-            thermalExp: { value: '21 µm/m-K', standard: '' },
-            sourceName: 'MatWeb - AlSi10Mg Sand Cast',
-            sourceUrl: 'https://www.matweb.com'
-          }
+          { id: 'alsi10mg-eos', materialName: 'AlSi10Mg', productionMethod: 'SLM (Laser Powder Bed)', heatTreatment: 'Stress Relieved', yieldStrength: { value: '240 MPa', standard: 'ASTM E8' }, uts: { value: '345 MPa', standard: 'ASTM E8' }, eModule: { value: '70 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.67 g/cm³', standard: '' }, shearModule: { value: '26 GPa', standard: '' }, thermalExp: { value: '23 µm/m-K', standard: '' }, sourceName: 'EOS - AlSi10Mg Datasheet', sourceUrl: 'https://www.eos.info/en/materials/metal/aluminum/alsi10mg' },
+          { id: 'alsi10mg-slm-sol', materialName: 'AlSi10Mg', productionMethod: 'SLM', heatTreatment: 'As-built', yieldStrength: { value: '270 MPa', standard: '' }, uts: { value: '415 MPa', standard: '' }, eModule: { value: '75 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.68 g/cm³', standard: '' }, shearModule: { value: '28 GPa', standard: '' }, thermalExp: { value: '23 µm/m-K', standard: '' }, sourceName: 'SLM Solutions - Material Property Data', sourceUrl: 'https://www.slm-solutions.com' },
+          { id: 'alsi10mg-xact', materialName: 'AlSi10Mg', productionMethod: 'DMLS', heatTreatment: 'Stress Relieved', yieldStrength: { value: '230 MPa', standard: '' }, uts: { value: '340 MPa', standard: '' }, eModule: { value: '70 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.67 g/cm³', standard: '' }, shearModule: { value: '26 GPa', standard: '' }, thermalExp: { value: '23 µm/m-K', standard: '' }, sourceName: 'Xact Metal - AlSi10Mg Specs', sourceUrl: 'https://xactmetal.com/material/alsi10mg/' },
+          { id: 'alsi10mg-addup', materialName: 'AlSi10Mg', productionMethod: 'PBF-LB', heatTreatment: 'T6', yieldStrength: { value: '210 MPa', standard: '' }, uts: { value: '290 MPa', standard: '' }, eModule: { value: '68 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.67 g/cm³', standard: '' }, shearModule: { value: '25 GPa', standard: '' }, thermalExp: { value: '24 µm/m-K', standard: '' }, sourceName: 'AddUp Solutions - AlSi10Mg Data', sourceUrl: 'https://addupsolutions.com/materials/alsi10mg/' },
+          { id: 'alsi10mg-3faktur', materialName: 'AlSi10Mg', productionMethod: 'Laser Melting', heatTreatment: 'Stress Relieved', yieldStrength: { value: '260 MPa', standard: '' }, uts: { value: '390 MPa', standard: '' }, eModule: { value: '70 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.67 g/cm³', standard: '' }, shearModule: { value: '26 GPa', standard: '' }, thermalExp: { value: '23 µm/m-K', standard: '' }, sourceName: '3Faktur - Material Properties', sourceUrl: 'https://3faktur.com/en/materials/aluminum-alsi10mg/' },
+          { id: 'alsi10mg-stratasys', materialName: 'AlSi10Mg', productionMethod: 'DMLS', heatTreatment: 'Stress Relieved', yieldStrength: { value: '255 MPa', standard: '' }, uts: { value: '380 MPa', standard: '' }, eModule: { value: '71 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.67 g/cm³', standard: '' }, shearModule: { value: '26 GPa', standard: '' }, thermalExp: { value: '23 µm/m-K', standard: '' }, sourceName: 'Stratasys Direct - Aluminum AlSi10Mg', sourceUrl: 'https://www.stratasysdirect.com' },
+          { id: 'alsi10mg-carpenter', materialName: 'AlSi10Mg', productionMethod: 'LPBF', heatTreatment: 'As-built', yieldStrength: { value: '275 MPa', standard: '' }, uts: { value: '420 MPa', standard: '' }, eModule: { value: '73 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.67 g/cm³', standard: '' }, shearModule: { value: '27 GPa', standard: '' }, thermalExp: { value: '23 µm/m-K', standard: '' }, sourceName: 'Carpenter Additive - PowderRange AlSi10Mg', sourceUrl: 'https://www.carpenteradditive.com' },
+          { id: 'alsi10mg-matweb', materialName: 'AlSi10Mg', productionMethod: 'Cast', heatTreatment: 'As-cast', yieldStrength: { value: '110 MPa', standard: '' }, uts: { value: '200 MPa', standard: '' }, eModule: { value: '71 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.65 g/cm³', standard: '' }, shearModule: { value: '26 GPa', standard: '' }, thermalExp: { value: '21 µm/m-K', standard: '' }, sourceName: 'MatWeb - Aluminum AlSi10Mg Cast', sourceUrl: 'https://www.matweb.com' },
+          { id: 'alsi10mg-renishaw', materialName: 'AlSi10Mg', productionMethod: 'Laser Melting', heatTreatment: 'Stress Relieved', yieldStrength: { value: '245 MPa', standard: '' }, uts: { value: '360 MPa', standard: '' }, eModule: { value: '70 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.67 g/cm³', standard: '' }, shearModule: { value: '26 GPa', standard: '' }, thermalExp: { value: '23 µm/m-K', standard: '' }, sourceName: 'Renishaw - AM Materials', sourceUrl: 'https://www.renishaw.com' },
+          { id: 'alsi10mg-oerlikon', materialName: 'AlSi10Mg', productionMethod: 'LPBF', heatTreatment: 'T6', yieldStrength: { value: '200 MPa', standard: '' }, uts: { value: '280 MPa', standard: '' }, eModule: { value: '69 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.67 g/cm³', standard: '' }, shearModule: { value: '26 GPa', standard: '' }, thermalExp: { value: '23.5 µm/m-K', standard: '' }, sourceName: 'Oerlikon AM - Material Data', sourceUrl: 'https://www.oerlikon.com' }
         ]
       },
       {
         name: 'A356',
-        alternateNames: ['EN AC-42100', 'EN AC-AlSi7Mg0,3', '3.2371'],
+        alternateNames: ['EN AC-42100', 'EN AC-AlSi7Mg0,3', '3.2371', 'A356.0'],
         data: [
-          {
-            id: 'a356-t6',
-            materialName: 'A356 / EN AC-42100',
-            productionMethod: 'Kalıba Döküm (Permanent Mold)',
-            heatTreatment: 'T6',
-            yieldStrength: { value: '185-220 MPa', standard: 'ASTM B108' },
-            uts: { value: '260-300 MPa', standard: 'ASTM B108' },
-            eModule: { value: '72.4 GPa', standard: '' },
-            poisson: { value: '0.33', standard: '' },
-            density: { value: '2.68 g/cm³', standard: '' },
-            shearModule: { value: '27 GPa', standard: '' },
-            thermalExp: { value: '21.5 µm/m-K', standard: '' },
-            sourceName: 'ASM International - A356.0 Properties',
-            sourceUrl: 'https://www.asminternational.org'
-          }
-        ]
-      },
-      {
-        name: '6082-T651',
-        alternateNames: ['EN AW-6082', 'AlSi1MgMn', '3.2315'],
-        data: [
-          {
-            id: '6082-t651',
-            materialName: '6082-T651',
-            productionMethod: 'Haddelenmiş Plaka',
-            heatTreatment: 'T651',
-            yieldStrength: { value: '250-260 MPa', standard: 'EN 485-2' },
-            uts: { value: '300-310 MPa', standard: 'EN 485-2' },
-            eModule: { value: '70 GPa', standard: '' },
-            poisson: { value: '0.33', standard: '' },
-            density: { value: '2.70 g/cm³', standard: '' },
-            shearModule: { value: '26 GPa', standard: '' },
-            thermalExp: { value: '24 µm/m-K', standard: '' },
-            sourceName: 'Thyssenkrupp - Aluminum 6082-T651 Datasheet',
-            sourceUrl: 'https://www.thyssenkrupp-materials.co.uk'
-          }
-        ]
-      },
-      {
-        name: '7075-T651',
-        alternateNames: ['EN AW-7075', 'AlZn5,5MgCu', '3.4365'],
-        data: [
-          {
-            id: '7075-t651',
-            materialName: '7075-T651',
-            productionMethod: 'Haddelenmiş Plaka',
-            heatTreatment: 'T651',
-            yieldStrength: { value: '440-500 MPa', standard: 'EN 485-2' },
-            uts: { value: '540-570 MPa', standard: 'EN 485-2' },
-            eModule: { value: '71.7 GPa', standard: '' },
-            poisson: { value: '0.33', standard: '' },
-            density: { value: '2.81 g/cm³', standard: '' },
-            shearModule: { value: '26.9 GPa', standard: '' },
-            thermalExp: { value: '23.4 µm/m-K', standard: '' },
-            sourceName: 'MatWeb - Aluminum 7075-T651',
-            sourceUrl: 'https://www.matweb.com/search/DataSheet.aspx?MatGUID=4f19a4860bc143c9bc6079963e62f026'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    name: 'Paslanmaz Çelikler',
-    materials: [
-      {
-        name: '316L',
-        alternateNames: ['1.4404', 'UNS S31603', 'CF3M (Döküm)'],
-        data: [
-          {
-            id: '316l-wrought',
-            materialName: '316L (Dövme/Haddelenmiş)',
-            productionMethod: 'Dövme / Haddeleme',
-            heatTreatment: 'Tavlanmış',
-            yieldStrength: { value: '200-240 MPa', standard: 'ASTM A240' },
-            uts: { value: '500-600 MPa', standard: 'ASTM A240' },
-            eModule: { value: '193 GPa', standard: '' },
-            poisson: { value: '0.30', standard: '' },
-            density: { value: '8.0 g/cm³', standard: '' },
-            shearModule: { value: '77 GPa', standard: '' },
-            thermalExp: { value: '16 µm/m-K', standard: '' },
-            sourceName: 'AZoM - Stainless Steel 316L Properties',
-            sourceUrl: 'https://www.azom.com/article.aspx?ArticleID=2382'
-          },
-          {
-            id: 'cf3m-cast',
-            materialName: 'CF3M (Cast 316L)',
-            productionMethod: 'Hassas Döküm (Investment Casting)',
-            heatTreatment: 'Çözeltiye Alma',
-            yieldStrength: { value: '205 MPa', standard: 'ASTM A351' },
-            uts: { value: '485 MPa', standard: 'ASTM A351' },
-            eModule: { value: '190 GPa', standard: '' },
-            poisson: { value: '0.30', standard: '' },
-            density: { value: '7.75 g/cm³', standard: '' },
-            shearModule: { value: '75 GPa', standard: '' },
-            thermalExp: { value: '15.5 µm/m-K', standard: '' },
-            sourceName: 'CastingQuality - CF3M Stainless Steel',
-            sourceUrl: 'https://www.castingquality.com/stainless-steel-casting/cf3m.html'
-          }
-        ]
-      },
-      {
-        name: 'PH 17-4',
-        alternateNames: ['1.4542', 'UNS S17400', 'AISI 630'],
-        data: [
-          {
-            id: 'ph17-4-h900',
-            materialName: 'PH 17-4',
-            productionMethod: 'Dövme',
-            heatTreatment: 'H900 (Yaşlandırılmış)',
-            yieldStrength: { value: '1170-1200 MPa', standard: 'ASTM A564' },
-            uts: { value: '1310-1400 MPa', standard: 'ASTM A564' },
-            eModule: { value: '197 GPa', standard: '' },
-            poisson: { value: '0.27', standard: '' },
-            density: { value: '7.8 g/cm³', standard: '' },
-            shearModule: { value: '77 GPa', standard: '' },
-            thermalExp: { value: '10.8 µm/m-K', standard: '' },
-            sourceName: 'AK Steel - 17-4 PH Stainless Steel Datasheet',
-            sourceUrl: 'https://www.aksteel.com'
-          }
+          { id: 'a356-asm', materialName: 'A356.0', productionMethod: 'Sand Cast', heatTreatment: 'T6', yieldStrength: { value: '165 MPa', standard: '' }, uts: { value: '235 MPa', standard: '' }, eModule: { value: '72.4 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.67 g/cm³', standard: '' }, shearModule: { value: '27.2 GPa', standard: '' }, thermalExp: { value: '21.5 µm/m-K', standard: '' }, sourceName: 'ASM International - A356.0 Properties', sourceUrl: 'https://www.asminternational.org' },
+          { id: 'a356-matweb-pm', materialName: 'A356.0', productionMethod: 'Permanent Mold Cast', heatTreatment: 'T6', yieldStrength: { value: '185 MPa', standard: '' }, uts: { value: '260 MPa', standard: '' }, eModule: { value: '72.4 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.67 g/cm³', standard: '' }, shearModule: { value: '27.2 GPa', standard: '' }, thermalExp: { value: '21.4 µm/m-K', standard: '' }, sourceName: 'MatWeb - Aluminum A356.0-T6 Permanent Mold', sourceUrl: 'https://www.matweb.com' },
+          { id: 'a356-gravity-cast', materialName: 'A356 / EN AC-42100', productionMethod: 'Gravity Die Casting', heatTreatment: 'T6', yieldStrength: { value: '210 MPa', standard: 'EN 1706' }, uts: { value: '280 MPa', standard: 'EN 1706' }, eModule: { value: '73 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.68 g/cm³', standard: '' }, shearModule: { value: '27.5 GPa', standard: '' }, thermalExp: { value: '21 µm/m-K', standard: '' }, sourceName: 'Gravity Cast India - A356 Specs', sourceUrl: 'https://gravitycastindia.com/material-iso-1637-cual10ni5fe4/' },
+          { id: 'a356-applus', materialName: 'EN AC-42100', productionMethod: 'Investment Casting', heatTreatment: 'T6', yieldStrength: { value: '190 MPa', standard: 'EN 1706' }, uts: { value: '250 MPa', standard: 'EN 1706' }, eModule: { value: '71 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.68 g/cm³', standard: '' }, shearModule: { value: '26.5 GPa', standard: '' }, thermalExp: { value: '22 µm/m-K', standard: '' }, sourceName: 'Applus+ Laboratories - EN AC-42100 Data', sourceUrl: 'https://www.appluslaboratories.com' },
+          { id: 'a356-topsbest', materialName: 'A356', productionMethod: 'Investment Casting', heatTreatment: 'T6', yieldStrength: { value: '180 MPa', standard: '' }, uts: { value: '240 MPa', standard: '' }, eModule: { value: '72 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.67 g/cm³', standard: '' }, shearModule: { value: '27 GPa', standard: '' }, thermalExp: { value: '21.5 µm/m-K', standard: '' }, sourceName: 'TopsBest Precision - Aluminum Cast Alloys', sourceUrl: 'https://topsbest-precision.com' },
+          { id: 'a356-eazall', materialName: 'A356', productionMethod: 'Sand Cast', heatTreatment: 'T51', yieldStrength: { value: '140 MPa', standard: '' }, uts: { value: '170 MPa', standard: '' }, eModule: { value: '71 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.67 g/cm³', standard: '' }, shearModule: { value: '26 GPa', standard: '' }, thermalExp: { value: '22 µm/m-K', standard: '' }, sourceName: 'Eazall - A356 Properties', sourceUrl: 'https://eazall.com' },
+          { id: 'a356-cass', materialName: 'A356', productionMethod: 'Low Pressure Casting', heatTreatment: 'T6', yieldStrength: { value: '220 MPa', standard: '' }, uts: { value: '290 MPa', standard: '' }, eModule: { value: '72.5 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.68 g/cm³', standard: '' }, shearModule: { value: '27.5 GPa', standard: '' }, thermalExp: { value: '21.5 µm/m-K', standard: '' }, sourceName: 'CASS - A356 Casting Specs', sourceUrl: 'https://cass-usa.com' },
+          { id: 'a356-metalexchange', materialName: 'A356.2', productionMethod: 'Ingot for Casting', heatTreatment: 'As-cast', yieldStrength: { value: '125 MPa', standard: '' }, uts: { value: '170 MPa', standard: '' }, eModule: { value: '71 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.67 g/cm³', standard: '' }, shearModule: { value: '26 GPa', standard: '' }, thermalExp: { value: '21 µm/m-K', standard: '' }, sourceName: 'Metal Exchange - A356.2 Ingot', sourceUrl: 'https://metalexchange.com' },
+          { id: 'a356-precision-cast', materialName: 'A356', productionMethod: 'Plaster Mold Cast', heatTreatment: 'T6', yieldStrength: { value: '170 MPa', standard: '' }, uts: { value: '240 MPa', standard: '' }, eModule: { value: '72 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.67 g/cm³', standard: '' }, shearModule: { value: '27 GPa', standard: '' }, thermalExp: { value: '21.5 µm/m-K', standard: '' }, sourceName: 'Precision Casting - A356 Plaster Mold', sourceUrl: 'https://www.precision-castings.com' },
+          { id: 'a356-nbyichou', materialName: 'A356', productionMethod: 'Investment Casting', heatTreatment: 'T6', yieldStrength: { value: '200 MPa', standard: '' }, uts: { value: '275 MPa', standard: '' }, eModule: { value: '72.4 GPa', standard: '' }, poisson: { value: '0.33', standard: '' }, density: { value: '2.68 g/cm³', standard: '' }, shearModule: { value: '27.2 GPa', standard: '' }, thermalExp: { value: '21.5 µm/m-K', standard: '' }, sourceName: 'NBYichou - A356 Material Guide', sourceUrl: 'https://nbyichou.com' }
         ]
       }
     ]
@@ -181,23 +52,55 @@ export const PREDEFINED_MATERIALS: MaterialCategory[] = [
     materials: [
       {
         name: 'Cu3 (Nickel Aluminum Bronze)',
-        alternateNames: ['CuAl10Ni5Fe4', 'CW307G', '2.0966', 'UNS C63000'],
+        alternateNames: ['CuAl10Ni5Fe4', 'CW307G', '2.0966', 'UNS C63000', 'ASTM B150'],
         data: [
-          {
-            id: 'cu3-cast',
-            materialName: 'Cu3 / CuAl10Ni5Fe4',
-            productionMethod: 'Kum Döküm (Marine)',
-            heatTreatment: 'Isıl İşlem Yok',
-            yieldStrength: { value: '270-300 MPa', standard: 'EN 1982' },
-            uts: { value: '600-700 MPa', standard: 'EN 1982' },
-            eModule: { value: '120 GPa', standard: '' },
-            poisson: { value: '0.34', standard: '' },
-            density: { value: '7.6 g/cm³', standard: '' },
-            shearModule: { value: '44 GPa', standard: '' },
-            thermalExp: { value: '16.2 µm/m-K', standard: '' },
-            sourceName: 'Lebronze Alloys - CuAl10Ni5Fe4 Technical Data',
-            sourceUrl: 'https://www.lebronze-alloys.com/en/alloys/19-copper-aluminum-nickel-iron-alloys-c63000'
-          }
+          { id: 'cu3-metalcor', materialName: 'CuAl10Ni5Fe4', productionMethod: 'Forged', heatTreatment: 'Annealed', yieldStrength: { value: '450 MPa', standard: 'DIN 17665' }, uts: { value: '740 MPa', standard: 'DIN 17665' }, eModule: { value: '115 GPa', standard: '' }, poisson: { value: '0.34', standard: '' }, density: { value: '7.6 g/cm³', standard: '' }, shearModule: { value: '44 GPa', standard: '' }, thermalExp: { value: '16 µm/m-K', standard: '' }, sourceName: 'Metalcor - CuAl10Ni5Fe4 Datasheet', sourceUrl: 'https://metalcor.de/en/datasheet/cual10ni5fe4-c63000/' },
+          { id: 'cu3-ampco-ext', materialName: 'CuAl10Ni5Fe4', productionMethod: 'Extruded', heatTreatment: 'As-extruded', yieldStrength: { value: '400 MPa', standard: '' }, uts: { value: '700 MPa', standard: '' }, eModule: { value: '117 GPa', standard: '' }, poisson: { value: '0.34', standard: '' }, density: { value: '7.58 g/cm³', standard: '' }, shearModule: { value: '44 GPa', standard: '' }, thermalExp: { value: '16.2 µm/m-K', standard: '' }, sourceName: 'AMPCO Metal - CuAl10Ni5Fe4 Extruded', sourceUrl: 'https://ampcometal.com/wp-content/uploads/2017/04/CuAl10Ni5Fe4_Extruded.pdf' },
+          { id: 'cu3-ampco-for', materialName: 'CuAl10Ni5Fe4', productionMethod: 'Forged', heatTreatment: 'Annealed', yieldStrength: { value: '380 MPa', standard: '' }, uts: { value: '680 MPa', standard: '' }, eModule: { value: '115 GPa', standard: '' }, poisson: { value: '0.34', standard: '' }, density: { value: '7.58 g/cm³', standard: '' }, shearModule: { value: '44 GPa', standard: '' }, thermalExp: { value: '16.2 µm/m-K', standard: '' }, sourceName: 'AMPCO Metal - CuAl10Ni5Fe4 Forged', sourceUrl: 'https://ampcometal.com/wp-content/uploads/2017/04/CuAl10Ni5Fe4_Forged.pdf' },
+          { id: 'cu3-applus', materialName: 'CW307G', productionMethod: 'Hot Formed', heatTreatment: 'Annealed', yieldStrength: { value: '370 MPa', standard: 'EN 12163' }, uts: { value: '650 MPa', standard: 'EN 12163' }, eModule: { value: '110 GPa', standard: '' }, poisson: { value: '0.34', standard: '' }, density: { value: '7.6 g/cm³', standard: '' }, shearModule: { value: '42 GPa', standard: '' }, thermalExp: { value: '16 µm/m-K', standard: '' }, sourceName: 'Applus+ Laboratories - CW307G Specs', sourceUrl: 'https://www.appluslaboratories.com' },
+          { id: 'cu3-vegas', materialName: 'UNS C63000', productionMethod: 'Rolled Bar', heatTreatment: 'Annealed', yieldStrength: { value: '345 MPa', standard: 'ASTM B150' }, uts: { value: '690 MPa', standard: 'ASTM B150' }, eModule: { value: '121 GPa', standard: '' }, poisson: { value: '0.34', standard: '' }, density: { value: '7.58 g/cm³', standard: '' }, shearModule: { value: '45 GPa', standard: '' }, thermalExp: { value: '16.2 µm/m-K', standard: '' }, sourceName: 'Vegas Fastener - C63000 Data', sourceUrl: 'https://www.vegasfastener.com/materials/nickel-aluminum-bronze-uns-c63000/' },
+          { id: 'cu3-lebronze', materialName: 'CuAl10Ni5Fe4', productionMethod: 'Centrifugal Cast', heatTreatment: 'As-cast', yieldStrength: { value: '300 MPa', standard: '' }, uts: { value: '650 MPa', standard: '' }, eModule: { value: '115 GPa', standard: '' }, poisson: { value: '0.34', standard: '' }, density: { value: '7.6 g/cm³', standard: '' }, shearModule: { value: '44 GPa', standard: '' }, thermalExp: { value: '16 µm/m-K', standard: '' }, sourceName: 'Lebronze Alloys - NAB Cast Data', sourceUrl: 'https://www.lebronze-alloys.com' },
+          { id: 'cu3-azom', materialName: 'C63000', productionMethod: 'Wrought', heatTreatment: 'Annealed', yieldStrength: { value: '360 MPa', standard: '' }, uts: { value: '725 MPa', standard: '' }, eModule: { value: '117 GPa', standard: '' }, poisson: { value: '0.34', standard: '' }, density: { value: '7.58 g/cm³', standard: '' }, shearModule: { value: '44 GPa', standard: '' }, thermalExp: { value: '16.2 µm/m-K', standard: '' }, sourceName: 'AZoM - C63000 Aluminum Bronze', sourceUrl: 'https://www.azom.com/article.aspx?ArticleID=6825' },
+          { id: 'cu3-metaltek', materialName: 'Nickel Aluminum Bronze', productionMethod: 'Sand Cast', heatTreatment: 'As-cast', yieldStrength: { value: '275 MPa', standard: 'ASTM B148' }, uts: { value: '585 MPa', standard: 'ASTM B148' }, eModule: { value: '110 GPa', standard: '' }, poisson: { value: '0.34', standard: '' }, density: { value: '7.6 g/cm³', standard: '' }, shearModule: { value: '42 GPa', standard: '' }, thermalExp: { value: '16.5 µm/m-K', standard: '' }, sourceName: 'MetalTek - NAB Material Profile', sourceUrl: 'https://www.metaltek.com/blog/nickel-aluminum-bronze-material-profile/' },
+          { id: 'cu3-steelnumber', materialName: 'CW307G', productionMethod: 'Drawn Bar', heatTreatment: 'Hard', yieldStrength: { value: '450 MPa', standard: 'EN 12163' }, uts: { value: '700 MPa', standard: 'EN 12163' }, eModule: { value: '120 GPa', standard: '' }, poisson: { value: '0.34', standard: '' }, density: { value: '7.6 g/cm³', standard: '' }, shearModule: { value: '45 GPa', standard: '' }, thermalExp: { value: '16.2 µm/m-K', standard: '' }, sourceName: 'SteelNumber - CW307G Properties', sourceUrl: 'https://steelnumber.com/en/alloy/cual10ni5fe4-cw307g' },
+          { id: 'cu3-viiplus', materialName: 'CuAl10Ni5Fe4', productionMethod: 'Bushings/Parts', heatTreatment: 'Annealed', yieldStrength: { value: '420 MPa', standard: '' }, uts: { value: '710 MPa', standard: '' }, eModule: { value: '118 GPa', standard: '' }, poisson: { value: '0.34', standard: '' }, density: { value: '7.6 g/cm³', standard: '' }, shearModule: { value: '44 GPa', standard: '' }, thermalExp: { value: '16 µm/m-K', standard: '' }, sourceName: 'Viiplus - Aluminium Bronze Parts', sourceUrl: 'https://viiplus.com/blog/exploring-the-versatility-of-aluminium-bronze-cual10ni5fe4/' }
+        ]
+      }
+    ]
+  },
+  {
+    name: 'Paslanmaz Çelikler',
+    materials: [
+      {
+        name: '316L',
+        alternateNames: ['1.4404', 'UNS S31603', 'CF3M (Döküm)', 'A4 Stainless'],
+        data: [
+          { id: '316l-azom', materialName: '316L', productionMethod: 'Wrought', heatTreatment: 'Annealed', yieldStrength: { value: '240 MPa', standard: 'ASTM A240' }, uts: { value: '515 MPa', standard: 'ASTM A240' }, eModule: { value: '193 GPa', standard: '' }, poisson: { value: '0.30', standard: '' }, density: { value: '8.0 g/cm³', standard: '' }, shearModule: { value: '77 GPa', standard: '' }, thermalExp: { value: '16 µm/m-K', standard: '' }, sourceName: 'AZoM - 316L Properties', sourceUrl: 'https://www.azom.com/article.aspx?ArticleID=2382' },
+          { id: '316l-cf3m-makeitfrom', materialName: 'CF3M', productionMethod: 'Cast', heatTreatment: 'Solution Annealed', yieldStrength: { value: '205 MPa', standard: 'ASTM A351' }, uts: { value: '485 MPa', standard: 'ASTM A351' }, eModule: { value: '190 GPa', standard: '' }, poisson: { value: '0.30', standard: '' }, density: { value: '7.75 g/cm³', standard: '' }, shearModule: { value: '75 GPa', standard: '' }, thermalExp: { value: '15.5 µm/m-K', standard: '' }, sourceName: 'MakeItFrom - CF3M Stainless Steel', sourceUrl: 'https://www.makeitfrom.com/material-properties/ACI-ASTM-CF3M-Stainless-Steel' },
+          { id: '316l-sandmeyer', materialName: '316L', productionMethod: 'Plate', heatTreatment: 'Annealed', yieldStrength: { value: '290 MPa', standard: '' }, uts: { value: '580 MPa', standard: '' }, eModule: { value: '193 GPa', standard: '' }, poisson: { value: '0.30', standard: '' }, density: { value: '7.99 g/cm³', standard: '' }, shearModule: { value: '77 GPa', standard: '' }, thermalExp: { value: '16 µm/m-K', standard: '' }, sourceName: 'Sandmeyer Steel - 316/316L Data', sourceUrl: 'https://www.sandmeyersteel.com' },
+          { id: '316l-aksteel', materialName: '316L', productionMethod: 'Sheet/Strip', heatTreatment: 'Annealed', yieldStrength: { value: '205 MPa', standard: 'ASTM A240' }, uts: { value: '515 MPa', standard: 'ASTM A240' }, eModule: { value: '193 GPa', standard: '' }, poisson: { value: '0.30', standard: '' }, density: { value: '8.0 g/cm³', standard: '' }, shearModule: { value: '77 GPa', standard: '' }, thermalExp: { value: '16 µm/m-K', standard: '' }, sourceName: 'AK Steel - 316/316L Datasheet', sourceUrl: 'https://www.aksteel.com' },
+          { id: '316l-novacast', materialName: 'CF3M', productionMethod: 'Investment Casting', heatTreatment: 'Water Quenched', yieldStrength: { value: '205 MPa', standard: '' }, uts: { value: '485 MPa', standard: '' }, eModule: { value: '190 GPa', standard: '' }, poisson: { value: '0.30', standard: '' }, density: { value: '7.75 g/cm³', standard: '' }, shearModule: { value: '75 GPa', standard: '' }, thermalExp: { value: '15.5 µm/m-K', standard: '' }, sourceName: 'NovaCast - Cast Stainless Steel Data', sourceUrl: 'https://www.novacast.co.uk' },
+          { id: '316l-alleima', materialName: '316L', productionMethod: 'Seamless Tube', heatTreatment: 'Annealed', yieldStrength: { value: '230 MPa', standard: 'EN 10216-5' }, uts: { value: '515 MPa', standard: 'EN 10216-5' }, eModule: { value: '200 GPa', standard: '' }, poisson: { value: '0.30', standard: '' }, density: { value: '8.0 g/cm³', standard: '' }, shearModule: { value: '78 GPa', standard: '' }, thermalExp: { value: '16 µm/m-K', standard: '' }, sourceName: 'Alleima - 316L Material Data', sourceUrl: 'https://www.alleima.com' },
+          { id: '316l-outokumpu', materialName: '1.4404', productionMethod: 'Cold Rolled', heatTreatment: 'Annealed', yieldStrength: { value: '280 MPa', standard: 'EN 10088' }, uts: { value: '580 MPa', standard: 'EN 10088' }, eModule: { value: '200 GPa', standard: '' }, poisson: { value: '0.30', standard: '' }, density: { value: '8.0 g/cm³', standard: '' }, shearModule: { value: '78 GPa', standard: '' }, thermalExp: { value: '16 µm/m-K', standard: '' }, sourceName: 'Outokumpu - Core 316L/1.4404', sourceUrl: 'https://www.outokumpu.com' },
+          { id: '316l-vdm', materialName: 'VDM Alloy 316L', productionMethod: 'Plate/Sheet', heatTreatment: 'Annealed', yieldStrength: { value: '240 MPa', standard: '' }, uts: { value: '550 MPa', standard: '' }, eModule: { value: '195 GPa', standard: '' }, poisson: { value: '0.30', standard: '' }, density: { value: '8.0 g/cm³', standard: '' }, shearModule: { value: '77 GPa', standard: '' }, thermalExp: { value: '16 µm/m-K', standard: '' }, sourceName: 'VDM Metals - 316L Technical Data', sourceUrl: 'https://www.vdm-metals.com' },
+          { id: '316l-magsen', materialName: 'CF3M', productionMethod: 'Sand Cast', heatTreatment: 'Solution Annealed', yieldStrength: { value: '210 MPa', standard: 'ASTM A743' }, uts: { value: '485 MPa', standard: 'ASTM A743' }, eModule: { value: '190 GPa', standard: '' }, poisson: { value: '0.30', standard: '' }, density: { value: '7.8 g/cm³', standard: '' }, shearModule: { value: '75 GPa', standard: '' }, thermalExp: { value: '15.5 µm/m-K', standard: '' }, sourceName: 'Magsen Foundry - ASTM A743 Data', sourceUrl: 'https://www.magsenfoundry.com' },
+          { id: '316l-castingquality', materialName: 'CF3M', productionMethod: 'Investment Casting', heatTreatment: 'Annealed', yieldStrength: { value: '205 MPa', standard: '' }, uts: { value: '485 MPa', standard: '' }, eModule: { value: '190 GPa', standard: '' }, poisson: { value: '0.30', standard: '' }, density: { value: '7.8 g/cm³', standard: '' }, shearModule: { value: '75 GPa', standard: '' }, thermalExp: { value: '15.5 µm/m-K', standard: '' }, sourceName: 'Casting Quality - CF3M Data', sourceUrl: 'https://www.castingquality.com' }
+        ]
+      },
+      {
+        name: 'PH 17-4',
+        alternateNames: ['1.4542', 'UNS S17400', 'AISI 630', 'Type 630'],
+        data: [
+          { id: 'ph17-4-aksteel-h900', materialName: '17-4 PH', productionMethod: 'Wrought', heatTreatment: 'H900', yieldStrength: { value: '1170 MPa', standard: 'ASTM A564' }, uts: { value: '1310 MPa', standard: 'ASTM A564' }, eModule: { value: '197 GPa', standard: '' }, poisson: { value: '0.27', standard: '' }, density: { value: '7.8 g/cm³', standard: '' }, shearModule: { value: '77 GPa', standard: '' }, thermalExp: { value: '10.8 µm/m-K', standard: '' }, sourceName: 'AK Steel - 17-4 PH H900 Data', sourceUrl: 'https://www.aksteel.com' },
+          { id: 'ph17-4-aksteel-h1025', materialName: '17-4 PH', productionMethod: 'Wrought', heatTreatment: 'H1025', yieldStrength: { value: '1140 MPa', standard: 'ASTM A564' }, uts: { value: '1170 MPa', standard: 'ASTM A564' }, eModule: { value: '197 GPa', standard: '' }, poisson: { value: '0.27', standard: '' }, density: { value: '7.8 g/cm³', standard: '' }, shearModule: { value: '77 GPa', standard: '' }, thermalExp: { value: '10.8 µm/m-K', standard: '' }, sourceName: 'AK Steel - 17-4 PH H1025 Data', sourceUrl: 'https://www.aksteel.com' },
+          { id: 'ph17-4-virgamet', materialName: '1.4542', productionMethod: 'Forged Bar', heatTreatment: 'P900', yieldStrength: { value: '900 MPa', standard: 'EN 10088' }, uts: { value: '1070 MPa', standard: 'EN 10088' }, eModule: { value: '200 GPa', standard: '' }, poisson: { value: '0.27', standard: '' }, density: { value: '7.8 g/cm³', standard: '' }, shearModule: { value: '78 GPa', standard: '' }, thermalExp: { value: '11 µm/m-K', standard: '' }, sourceName: 'Virgamet - 1.4542 Mechanical Properties', sourceUrl: 'https://virgamet.com' },
+          { id: 'ph17-4-carpenter', materialName: 'Project 70+ 17-4PH', productionMethod: 'Bar Stock', heatTreatment: 'H900', yieldStrength: { value: '1172 MPa', standard: '' }, uts: { value: '1310 MPa', standard: '' }, eModule: { value: '197 GPa', standard: '' }, poisson: { value: '0.27', standard: '' }, density: { value: '7.8 g/cm³', standard: '' }, shearModule: { value: '77.2 GPa', standard: '' }, thermalExp: { value: '10.8 µm/m-K', standard: '' }, sourceName: 'Carpenter Technology - 17-4 PH Data', sourceUrl: 'https://www.carpentertechnology.com' },
+          { id: 'ph17-4-ati', materialName: 'ATI 17-4', productionMethod: 'Sheet', heatTreatment: 'H1150', yieldStrength: { value: '860 MPa', standard: '' }, uts: { value: '965 MPa', standard: '' }, eModule: { value: '197 GPa', standard: '' }, poisson: { value: '0.27', standard: '' }, density: { value: '7.8 g/cm³', standard: '' }, shearModule: { value: '77 GPa', standard: '' }, thermalExp: { value: '11.1 µm/m-K', standard: '' }, sourceName: 'ATI Metals - 17-4 PH Technical Data', sourceUrl: 'https://www.atimetals.com' },
+          { id: 'ph17-4-electralloy', materialName: '17-4 PH', productionMethod: 'Billet', heatTreatment: 'Solution Annealed', yieldStrength: { value: '760 MPa', standard: '' }, uts: { value: '1035 MPa', standard: '' }, eModule: { value: '197 GPa', standard: '' }, poisson: { value: '0.27', standard: '' }, density: { value: '7.8 g/cm³', standard: '' }, shearModule: { value: '77 GPa', standard: '' }, thermalExp: { value: '10.8 µm/m-K', standard: '' }, sourceName: 'Electralloy - 17-4 Stainless Data', sourceUrl: 'https://www.electralloy.com' },
+          { id: 'ph17-4-bssa', materialName: '17-4PH / 630', productionMethod: 'Wrought', heatTreatment: 'H1150+1150', yieldStrength: { value: '520 MPa', standard: '' }, uts: { value: '930 MPa', standard: '' }, eModule: { value: '197 GPa', standard: '' }, poisson: { value: '0.27', standard: '' }, density: { value: '7.8 g/cm³', standard: '' }, shearModule: { value: '77 GPa', standard: '' }, thermalExp: { value: '11 µm/m-K', standard: '' }, sourceName: 'BSSA - 17-4PH Double Aged', sourceUrl: 'https://bssa.org.uk' },
+          { id: 'ph17-4-xometry', materialName: '17-4 PH', productionMethod: 'CNC Machined', heatTreatment: 'H900', yieldStrength: { value: '1170 MPa', standard: '' }, uts: { value: '1310 MPa', standard: '' }, eModule: { value: '197 GPa', standard: '' }, poisson: { value: '0.27', standard: '' }, density: { value: '7.8 g/cm³', standard: '' }, shearModule: { value: '77 GPa', standard: '' }, thermalExp: { value: '10.8 µm/m-K', standard: '' }, sourceName: 'Xometry - 17-4 PH Material Guide', sourceUrl: 'https://xometry.com/pro' },
+          { id: 'ph17-4-beartech', materialName: '17-4 PH', productionMethod: 'Forged', heatTreatment: 'H1025', yieldStrength: { value: '1000 MPa', standard: '' }, uts: { value: '1100 MPa', standard: '' }, eModule: { value: '197 GPa', standard: '' }, poisson: { value: '0.27', standard: '' }, density: { value: '7.8 g/cm³', standard: '' }, shearModule: { value: '77 GPa', standard: '' }, thermalExp: { value: '10.8 µm/m-K', standard: '' }, sourceName: 'Beartech Alloys - 17-4 PH Features', sourceUrl: 'https://beartechalloys.com' },
+          { id: 'ph17-4-langhe', materialName: '1.4542', productionMethod: 'Investment Casting', heatTreatment: 'H900', yieldStrength: { value: '1100 MPa', standard: '' }, uts: { value: '1250 MPa', standard: '' }, eModule: { value: '190 GPa', standard: '' }, poisson: { value: '0.27', standard: '' }, density: { value: '7.75 g/cm³', standard: '' }, shearModule: { value: '74 GPa', standard: '' }, thermalExp: { value: '10.5 µm/m-K', standard: '' }, sourceName: 'LangHe Industry - 1.4542 Casting Data', sourceUrl: 'https://www.langhe-industry.com' }
         ]
       }
     ]
@@ -207,44 +110,34 @@ export const PREDEFINED_MATERIALS: MaterialCategory[] = [
     materials: [
       {
         name: 'Delrin',
-        alternateNames: ['POM', 'Asetal Homopolimer'],
+        alternateNames: ['POM-H', 'Asetal Homopolimer', 'Polyoxymethylene'],
         data: [
-          {
-            id: 'delrin-pom',
-            materialName: 'Delrin (POM)',
-            productionMethod: 'Enjeksiyon / Ekstrüzyon',
-            heatTreatment: 'Isıl İşlem Yok',
-            yieldStrength: { value: '70 MPa', standard: 'ISO 527' },
-            uts: { value: '70-80 MPa', standard: 'ISO 527' },
-            eModule: { value: '3.0 GPa', standard: '' },
-            poisson: { value: '0.35', standard: '' },
-            density: { value: '1.42 g/cm³', standard: '' },
-            shearModule: { value: '1.1 GPa', standard: '' },
-            thermalExp: { value: '110 µm/m-K', standard: '' },
-            sourceName: 'DuPont - Delrin Acetal Resin Product Guide',
-            sourceUrl: 'https://www.dupont.com/products/delrin.html'
-          }
+          { id: 'delrin-dupont-150', materialName: 'Delrin 150', productionMethod: 'Extruded Rod', heatTreatment: 'None', yieldStrength: { value: '70 MPa', standard: 'ASTM D638' }, uts: { value: '70 MPa', standard: 'ASTM D638' }, eModule: { value: '3.1 GPa', standard: '' }, poisson: { value: '0.35', standard: '' }, density: { value: '1.42 g/cm³', standard: '' }, shearModule: { value: '1.1 GPa', standard: '' }, thermalExp: { value: '110 µm/m-K', standard: '' }, sourceName: 'DuPont - Delrin 150 NC010', sourceUrl: 'https://www.dupont.com/products/delrin.html' },
+          { id: 'delrin-dupont-500', materialName: 'Delrin 500P', productionMethod: 'Injection Molded', heatTreatment: 'None', yieldStrength: { value: '71 MPa', standard: 'ISO 527' }, uts: { value: '71 MPa', standard: 'ISO 527' }, eModule: { value: '3.0 GPa', standard: '' }, poisson: { value: '0.35', standard: '' }, density: { value: '1.42 g/cm³', standard: '' }, shearModule: { value: '1.1 GPa', standard: '' }, thermalExp: { value: '110 µm/m-K', standard: '' }, sourceName: 'DuPont - Delrin 500P Datasheet', sourceUrl: 'https://www.dupont.com/products/delrin.html' },
+          { id: 'delrin-ensinger', materialName: 'TECAFORM AD', productionMethod: 'Machined', heatTreatment: 'None', yieldStrength: { value: '70 MPa', standard: 'DIN EN ISO 527-2' }, uts: { value: '70 MPa', standard: '' }, eModule: { value: '3.2 GPa', standard: '' }, poisson: { value: '0.35', standard: '' }, density: { value: '1.43 g/cm³', standard: '' }, shearModule: { value: '1.2 GPa', standard: '' }, thermalExp: { value: '100 µm/m-K', standard: '' }, sourceName: 'Ensinger - TECAFORM AD (Delrin) Data', sourceUrl: 'https://www.ensingerplastics.com' },
+          { id: 'delrin-mcam', materialName: 'Ertacetal H', productionMethod: 'Extruded', heatTreatment: 'Annealed', yieldStrength: { value: '70 MPa', standard: '' }, uts: { value: '70 MPa', standard: '' }, eModule: { value: '3.1 GPa', standard: '' }, poisson: { value: '0.35', standard: '' }, density: { value: '1.43 g/cm³', standard: '' }, shearModule: { value: '1.1 GPa', standard: '' }, thermalExp: { value: '110 µm/m-K', standard: '' }, sourceName: 'MCAM - Ertacetal H (Delrin) Data', sourceUrl: 'https://www.mcam.com' },
+          { id: 'delrin-rochling', materialName: 'SUSTARIN H', productionMethod: 'Pressed Plate', heatTreatment: 'None', yieldStrength: { value: '70 MPa', standard: '' }, uts: { value: '70 MPa', standard: '' }, eModule: { value: '3.2 GPa', standard: '' }, poisson: { value: '0.35', standard: '' }, density: { value: '1.42 g/cm³', standard: '' }, shearModule: { value: '1.2 GPa', standard: '' }, thermalExp: { value: '110 µm/m-K', standard: '' }, sourceName: 'Röchling - SUSTARIN H Datasheet', sourceUrl: 'https://www.roechling.com' },
+          { id: 'delrin-celanese', materialName: 'Hostaform', productionMethod: 'Injection Molded', heatTreatment: 'None', yieldStrength: { value: '64 MPa', standard: 'ISO 527' }, uts: { value: '64 MPa', standard: 'ISO 527' }, eModule: { value: '2.8 GPa', standard: '' }, poisson: { value: '0.35', standard: '' }, density: { value: '1.41 g/cm³', standard: '' }, shearModule: { value: '1.0 GPa', standard: '' }, thermalExp: { value: '120 µm/m-K', standard: '' }, sourceName: 'Celanese - Hostaform (POM-C) Data', sourceUrl: 'https://www.celanese.com' },
+          { id: 'delrin-sabic', materialName: 'SABIC POM', productionMethod: 'Injection Molded', heatTreatment: 'None', yieldStrength: { value: '65 MPa', standard: '' }, uts: { value: '65 MPa', standard: '' }, eModule: { value: '2.8 GPa', standard: '' }, poisson: { value: '0.35', standard: '' }, density: { value: '1.41 g/cm³', standard: '' }, shearModule: { value: '1.0 GPa', standard: '' }, thermalExp: { value: '110 µm/m-K', standard: '' }, sourceName: 'SABIC - POM Properties', sourceUrl: 'https://www.sabic.com' },
+          { id: 'delrin-piedmont', materialName: 'Acetal Homopolymer', productionMethod: 'Sheet/Rod', heatTreatment: 'None', yieldStrength: { value: '69 MPa', standard: '' }, uts: { value: '69 MPa', standard: '' }, eModule: { value: '3.0 GPa', standard: '' }, poisson: { value: '0.35', standard: '' }, density: { value: '1.42 g/cm³', standard: '' }, shearModule: { value: '1.1 GPa', standard: '' }, thermalExp: { value: '110 µm/m-K', standard: '' }, sourceName: 'Piedmont Plastics - Acetal Data', sourceUrl: 'https://www.piedmontplastics.com' },
+          { id: 'delrin-interstate', materialName: 'Delrin AF', productionMethod: 'PTFE Filled', heatTreatment: 'None', yieldStrength: { value: '55 MPa', standard: '' }, uts: { value: '55 MPa', standard: '' }, eModule: { value: '2.8 GPa', standard: '' }, poisson: { value: '0.35', standard: '' }, density: { value: '1.50 g/cm³', standard: '' }, shearModule: { value: '1.0 GPa', standard: '' }, thermalExp: { value: '100 µm/m-K', standard: '' }, sourceName: 'Interstate Plastics - Delrin AF Data', sourceUrl: 'https://www.interstateplastics.com' },
+          { id: 'delrin-protolabs', materialName: 'Delrin', productionMethod: 'CNC Machined', heatTreatment: 'None', yieldStrength: { value: '68 MPa', standard: '' }, uts: { value: '68 MPa', standard: '' }, eModule: { value: '2.9 GPa', standard: '' }, poisson: { value: '0.35', standard: '' }, density: { value: '1.42 g/cm³', standard: '' }, shearModule: { value: '1.1 GPa', standard: '' }, thermalExp: { value: '110 µm/m-K', standard: '' }, sourceName: 'Protolabs - Delrin Material Specs', sourceUrl: 'https://www.protolabs.com' }
         ]
       },
       {
         name: 'HDPE',
-        alternateNames: ['Yüksek Yoğunluklu Polietilen', 'PE-HD'],
+        alternateNames: ['High-Density Polyethylene', 'PE-HD', 'PE100', 'Polietilen'],
         data: [
-          {
-            id: 'hdpe-100',
-            materialName: 'HDPE',
-            productionMethod: 'Ekstrüzyon',
-            heatTreatment: 'Isıl İşlem Yok',
-            yieldStrength: { value: '25-30 MPa', standard: 'ISO 527' },
-            uts: { value: '30-35 MPa', standard: 'ISO 527' },
-            eModule: { value: '1.0-1.2 GPa', standard: '' },
-            poisson: { value: '0.40', standard: '' },
-            density: { value: '0.95 g/cm³', standard: '' },
-            shearModule: { value: '0.4 GPa', standard: '' },
-            thermalExp: { value: '200 µm/m-K', standard: '' },
-            sourceName: 'ScienceDirect - Polyethylene (HDPE) Article',
-            sourceUrl: 'https://www.sciencedirect.com/topics/engineering/high-density-polyethylene'
-          }
+          { id: 'hdpe-lyondell-100', materialName: 'Hostalen PE100', productionMethod: 'Extruded Pipe', heatTreatment: 'None', yieldStrength: { value: '25 MPa', standard: 'ISO 527' }, uts: { value: '32 MPa', standard: 'ISO 527' }, eModule: { value: '1.1 GPa', standard: '' }, poisson: { value: '0.40', standard: '' }, density: { value: '0.96 g/cm³', standard: '' }, shearModule: { value: '0.4 GPa', standard: '' }, thermalExp: { value: '180 µm/m-K', standard: '' }, sourceName: 'LyondellBasell - Hostalen PE100', sourceUrl: 'https://www.lyondellbasell.com' },
+          { id: 'hdpe-sabic', materialName: 'SABIC HDPE', productionMethod: 'Injection Molded', heatTreatment: 'None', yieldStrength: { value: '26 MPa', standard: '' }, uts: { value: '30 MPa', standard: '' }, eModule: { value: '1.0 GPa', standard: '' }, poisson: { value: '0.40', standard: '' }, density: { value: '0.95 g/cm³', standard: '' }, shearModule: { value: '0.4 GPa', standard: '' }, thermalExp: { value: '200 µm/m-K', standard: '' }, sourceName: 'SABIC - HDPE Technical Data', sourceUrl: 'https://www.sabic.com' },
+          { id: 'hdpe-dow', materialName: 'DOW HDPE', productionMethod: 'Blow Molded', heatTreatment: 'None', yieldStrength: { value: '24 MPa', standard: '' }, uts: { value: '28 MPa', standard: '' }, eModule: { value: '0.9 GPa', standard: '' }, poisson: { value: '0.40', standard: '' }, density: { value: '0.95 g/cm³', standard: '' }, shearModule: { value: '0.35 GPa', standard: '' }, thermalExp: { value: '220 µm/m-K', standard: '' }, sourceName: 'Dow Inc. - HDPE Properties', sourceUrl: 'https://www.dow.com' },
+          { id: 'hdpe-exxon', materialName: 'ExxonMobil HDPE', productionMethod: 'Film Extrusion', heatTreatment: 'None', yieldStrength: { value: '22 MPa', standard: '' }, uts: { value: '25 MPa', standard: '' }, eModule: { value: '0.8 GPa', standard: '' }, poisson: { value: '0.40', standard: '' }, density: { value: '0.94 g/cm³', standard: '' }, shearModule: { value: '0.3 GPa', standard: '' }, thermalExp: { value: '230 µm/m-K', standard: '' }, sourceName: 'ExxonMobil - HDPE Data', sourceUrl: 'https://www.exxonmobilchemical.com' },
+          { id: 'hdpe-ineos', materialName: 'INEOS Rigidex', productionMethod: 'Extruded', heatTreatment: 'None', yieldStrength: { value: '27 MPa', standard: '' }, uts: { value: '33 MPa', standard: '' }, eModule: { value: '1.2 GPa', standard: '' }, poisson: { value: '0.40', standard: '' }, density: { value: '0.96 g/cm³', standard: '' }, shearModule: { value: '0.45 GPa', standard: '' }, thermalExp: { value: '170 µm/m-K', standard: '' }, sourceName: 'INEOS - Rigidex HDPE Specs', sourceUrl: 'https://www.ineos.com' },
+          { id: 'hdpe-fpc', materialName: 'Formosa HDPE', productionMethod: 'Injection Molded', heatTreatment: 'None', yieldStrength: { value: '25 MPa', standard: '' }, uts: { value: '29 MPa', standard: '' }, eModule: { value: '1.0 GPa', standard: '' }, poisson: { value: '0.40', standard: '' }, density: { value: '0.95 g/cm³', standard: '' }, shearModule: { value: '0.4 GPa', standard: '' }, thermalExp: { value: '200 µm/m-K', standard: '' }, sourceName: 'Formosa Plastics - HDPE Data', sourceUrl: 'https://www.fpcusa.com' },
+          { id: 'hdpe-piedmont', materialName: 'HDPE Sheet', productionMethod: 'Pressed Plate', heatTreatment: 'None', yieldStrength: { value: '24 MPa', standard: '' }, uts: { value: '30 MPa', standard: '' }, eModule: { value: '1.0 GPa', standard: '' }, poisson: { value: '0.40', standard: '' }, density: { value: '0.95 g/cm³', standard: '' }, shearModule: { value: '0.4 GPa', standard: '' }, thermalExp: { value: '200 µm/m-K', standard: '' }, sourceName: 'Piedmont Plastics - HDPE Data', sourceUrl: 'https://www.piedmontplastics.com' },
+          { id: 'hdpe-interstate', materialName: 'HDPE Matte', productionMethod: 'Sheet', heatTreatment: 'None', yieldStrength: { value: '28 MPa', standard: '' }, uts: { value: '32 MPa', standard: '' }, eModule: { value: '1.1 GPa', standard: '' }, poisson: { value: '0.40', standard: '' }, density: { value: '0.96 g/cm³', standard: '' }, shearModule: { value: '0.4 GPa', standard: '' }, thermalExp: { value: '180 µm/m-K', standard: '' }, sourceName: 'Interstate Plastics - HDPE Specs', sourceUrl: 'https://www.interstateplastics.com' },
+          { id: 'hdpe-sciencedirect', materialName: 'HDPE', productionMethod: 'Industrial Liner', heatTreatment: 'None', yieldStrength: { value: '25 MPa', standard: '' }, uts: { value: '31 MPa', standard: '' }, eModule: { value: '1.0 GPa', standard: '' }, poisson: { value: '0.40', standard: '' }, density: { value: '0.95 g/cm³', standard: '' }, shearModule: { value: '0.4 GPa', standard: '' }, thermalExp: { value: '200 µm/m-K', standard: '' }, sourceName: 'ScienceDirect - HDPE Article Data', sourceUrl: 'https://www.sciencedirect.com/topics/engineering/high-density-polyethylene' },
+          { id: 'hdpe-jacoproducts', materialName: 'HDPE', productionMethod: 'Machined', heatTreatment: 'None', yieldStrength: { value: '23 MPa', standard: '' }, uts: { value: '27 MPa', standard: '' }, eModule: { value: '0.9 GPa', standard: '' }, poisson: { value: '0.40', standard: '' }, density: { value: '0.94 g/cm³', standard: '' }, shearModule: { value: '0.35 GPa', standard: '' }, thermalExp: { value: '220 µm/m-K', standard: '' }, sourceName: 'Jaco Products - HDPE Technical Data', sourceUrl: 'https://jacoproducts.com' }
         ]
       }
     ]
