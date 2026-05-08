@@ -9,15 +9,20 @@ const openai = new OpenAI({
 
 const SYSTEM_PROMPT = `
 You are an expert Materials Science AI operating the MILPOD Denizcilik Malzeme Veritabanı. 
-Your job is to provide exact mechanical and thermal properties for a requested material (Metals or Polymers), categorized by their PRODUCTION METHOD and HEAT TREATMENT.
+Your job is to provide EXACT and VERIFIED mechanical and thermal properties for a requested material (Metals or Polymers), categorized by their PRODUCTION METHOD and HEAT TREATMENT.
 
-CRITICAL RULES:
-1. You MUST provide exactly 10 distinct rows/objects in the JSON array.
-2. PRODUCTION METHODS & HEAT TREATMENTS: Use ONLY Turkish terms. (e.g., Kuma Döküm, Hassas Döküm, Dövme, Haddeleme, Enjeksiyon Kalıplama, 3D Yazıcı, Tavlanmış, T6, Isıl İşlem Yok).
-3. ALTERNATE NAMES: For the requested material, always list its common equivalents or standard codes (e.g., DIN, EN, UNS, AISI) in the alternateNames field.
-4. SOURCE NAMES: Be very descriptive. e.g., "MatWeb - AISI 316L Sand Cast Datasheet".
-5. SOURCE LINKS: Provide DEEP LINKS (direct URLs) to the specific material datasheet. DO NOT just provide the homepage URL. If you don't know the exact deep link, try to construct a plausible one for MatWeb or similar databases based on common URL patterns, or prioritize sources where deep linking is known.
-6. ALL OUTPUT TEXT MUST BE IN TURKISH. Use Turkish decimal formats (comma as decimal separator) and SI units. 
+CRITICAL RULES FOR SOURCE DIVERSITY & ACCURACY:
+1. SOURCE VARIETY: You MUST use a diverse set of sources. DO NOT rely only on MatWeb. Your sources MUST include:
+   - Scientific Journals (e.g., Journal of Materials Science, Elsevier, Springer).
+   - Technical Textbooks (e.g., Callister's Materials Science, ASM Handbooks).
+   - Industry Standards (e.g., ASTM, ISO, DIN, EN).
+   - Research Papers (e.g., ScienceDirect, ResearchGate).
+   - Manufacturer Datasheets (e.g., Sandvik, Outokumpu, DuPont).
+2. DATA ACCURACY: Verification is mandatory. Ensure the values provided are accurate for the specific production method and heat treatment. If values differ between sources, provide the most widely accepted scientific value.
+3. QUANTITY: You MUST provide exactly 10 distinct rows/objects in the JSON array, each from a UNIQUE type of source if possible.
+4. PRODUCTION METHODS & HEAT TREATMENTS: Use ONLY Turkish terms. (e.g., Kuma Döküm, Hassas Döküm, Dövme, Haddeleme, Enjeksiyon Kalıplama, 3D Yazıcı, Tavlanmış, T6, Isıl İşlem Yok).
+5. SOURCE LINKS: Provide DEEP LINKS (direct URLs) to the specific article, paper, or datasheet. DO NOT provide homepage URLs.
+6. ALL OUTPUT TEXT MUST BE IN TURKISH. Use Turkish decimal formats (comma as decimal separator) and SI units.
 7. Output MUST be valid JSON.
 
 Schema:
@@ -36,8 +41,8 @@ Schema:
       "density": { "value": "değer ve birim", "standard": "" },
       "shearModule": { "value": "değer ve birim", "standard": "" },
       "thermalExp": { "value": "değer ve birim", "standard": "" },
-      "sourceName": "Kaynağın Tam Adı",
-      "sourceUrl": "Doğrudan Link"
+      "sourceName": "Kaynağın Tam Adı (Örn: ASM Handbook Vol 1 - Properties and Selection)",
+      "sourceUrl": "Doğrudan Makale/Veri Linki"
     }
   ]
 }
@@ -103,16 +108,16 @@ export async function POST(req: Request) {
 
 function generateMockData(query: string) {
   const sources = [
-    { name: 'MatWeb - Material Property Data', url: 'https://www.matweb.com/search/MaterialGroupSearch.aspx' },
-    { name: 'ASM Material Property Data', url: 'https://aerospacemetals.com/alloys/' },
-    { name: 'AZoM - Materials Information', url: 'https://www.azom.com/materials.aspx' },
-    { name: 'MakeItFrom - Material Database', url: 'https://www.makeitfrom.com/material-properties/' },
-    { name: 'Xometry Material Guide', url: 'https://www.xometry.com/resources/materials/' },
-    { name: 'Protolabs Material Data', url: 'https://www.protolabs.com/resources/materials/' },
-    { name: 'NIST Material Measurement Laboratory', url: 'https://www.nist.gov/mml' },
-    { name: 'Engineering Toolbox', url: 'https://www.engineeringtoolbox.com/metal-alloys-densities-d_50.html' },
-    { name: 'Matmatch Material Search', url: 'https://matmatch.com/search' },
-    { name: 'Sandmeyer Steel Company Datasheets', url: 'https://www.sandmeyersteel.com/stainless-steel-nickel-alloy-datasheets.html' },
+    { name: 'ASM Handbook Vol 1: Properties and Selection: Irons, Steels, and High-Performance Alloys', url: 'https://www.asminternational.org/materials-resources/handbooks' },
+    { name: 'Journal of Materials Research and Technology - Stainless Steel Study', url: 'https://www.sciencedirect.com/journal/journal-of-materials-research-and-technology' },
+    { name: 'ASTM A240/A240M Standard Specification for Chromium and Chromium-Nickel Stainless Steel', url: 'https://www.astm.org/a0240_a0240m-22.html' },
+    { name: 'Springer: Materials Science and Engineering Handbook', url: 'https://link.springer.com/book/10.1007/978-3-030-11155-7' },
+    { name: 'Outokumpu Stainless Steel Handbook', url: 'https://www.outokumpu.com/en/expertise/2021/stainless-steel-handbook' },
+    { name: 'ScienceDirect: Mechanical Properties of Marine Grade Steels', url: 'https://www.sciencedirect.com/topics/engineering/marine-grade-steel' },
+    { name: 'ResearchGate: Comparative Analysis of 316L Production Methods', url: 'https://www.researchgate.net/search/publications?q=316L+mechanical+properties' },
+    { name: 'MatWeb - Material Property Data (Validated Sheet)', url: 'https://www.matweb.com/search/DataSheet.aspx?MatGUID=9ae3515477264a8e9ad75a3173e9140c' },
+    { name: 'ISO 15510:2014 Stainless steels — Chemical composition', url: 'https://www.iso.org/standard/55474.html' },
+    { name: 'DuPont Materials Engineering Guide', url: 'https://www.dupont.com/products/delrin.html' },
   ];
 
   const qLen = query.length || 5;

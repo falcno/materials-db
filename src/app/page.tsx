@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import SearchBar from '../components/SearchBar';
 import ResultsTable, { SourceData } from '../components/ResultsTable';
+import { PREDEFINED_MATERIALS } from '../data/predefinedMaterials';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -18,6 +19,26 @@ export default function Home() {
     setError(null);
     setWarning(null);
     setData([]);
+
+    // Check predefined materials first for consistency
+    const lowerQuery = query.toLowerCase();
+    let foundPredefined = false;
+
+    for (const category of PREDEFINED_MATERIALS) {
+      const match = category.materials.find(m => 
+        m.name.toLowerCase() === lowerQuery || 
+        m.alternateNames?.some(alt => alt.toLowerCase() === lowerQuery)
+      );
+
+      if (match) {
+        setData(match.data);
+        setIsLoading(false);
+        foundPredefined = true;
+        break;
+      }
+    }
+
+    if (foundPredefined) return;
 
     try {
       const response = await fetch('/api/search', {
