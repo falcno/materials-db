@@ -9,19 +9,17 @@ const openai = new OpenAI({
 
 const SYSTEM_PROMPT = `
 You are an expert Materials Science AI operating the MILPOD Denizcilik Malzeme Veritabanı. 
-Your job is to provide EXACT and VERIFIED mechanical and thermal properties for a requested material (Metals or Polymers), categorized by their PRODUCTION METHOD and HEAT TREATMENT.
+Your job is to provide EXACT and VERIFIED mechanical and thermal properties for a requested material, categorized by their PRODUCTION METHOD and HEAT TREATMENT.
+
+SEARCH CONTEXT:
+You will be provided with real-time search results from the web. You MUST use these results to extract accurate values and find deep links. 
 
 CRITICAL RULES FOR SOURCE DIVERSITY & ACCURACY:
-1. SOURCE VARIETY: You MUST use a diverse set of sources. DO NOT rely only on MatWeb. Your sources MUST include:
-   - Scientific Journals (e.g., Journal of Materials Science, Elsevier, Springer).
-   - Technical Textbooks (e.g., Callister's Materials Science, ASM Handbooks).
-   - Industry Standards (e.g., ASTM, ISO, DIN, EN).
-   - Research Papers (e.g., ScienceDirect, ResearchGate).
-   - Manufacturer Datasheets (e.g., Sandvik, Outokumpu, DuPont).
-2. DATA ACCURACY: Verification is mandatory. Ensure the values provided are accurate for the specific production method and heat treatment. If values differ between sources, provide the most widely accepted scientific value.
-3. QUANTITY: You MUST provide exactly 10 distinct rows/objects in the JSON array, each from a UNIQUE type of source if possible.
+1. SOURCE VARIETY: You MUST use a diverse set of sources found in the search results (Scientific Journals, Textbooks, Standards, Manufacturer Datasheets).
+2. DATA ACCURACY: Verification is mandatory. Ensure the values provided match the specific production method and heat treatment described in the search results.
+3. QUANTITY: You MUST provide exactly 10 distinct rows/objects in the JSON array.
 4. PRODUCTION METHODS & HEAT TREATMENTS: Use ONLY Turkish terms. (e.g., Kuma Döküm, Hassas Döküm, Dövme, Haddeleme, Enjeksiyon Kalıplama, 3D Yazıcı, Tavlanmış, T6, Isıl İşlem Yok).
-5. SOURCE LINKS: Provide DEEP LINKS (direct URLs) to the specific article, paper, or datasheet. DO NOT provide homepage URLs.
+5. SOURCE LINKS: Provide DEEP LINKS (direct URLs) to the specific article or datasheet from the search results.
 6. ALL OUTPUT TEXT MUST BE IN TURKISH. Use Turkish decimal formats (comma as decimal separator) and SI units.
 7. Output MUST be valid JSON.
 
@@ -41,12 +39,38 @@ Schema:
       "density": { "value": "değer ve birim", "standard": "" },
       "shearModule": { "value": "değer ve birim", "standard": "" },
       "thermalExp": { "value": "değer ve birim", "standard": "" },
-      "sourceName": "Kaynağın Tam Adı (Örn: ASM Handbook Vol 1 - Properties and Selection)",
-      "sourceUrl": "Doğrudan Makale/Veri Linki"
+      "sourceName": "Kaynağın Tam Adı",
+      "sourceUrl": "Doğrudan Link"
     }
   ]
 }
 `;
+
+async function searchWeb(query: string) {
+  const apiKey = process.env.TAVILY_API_KEY;
+  if (!apiKey) return null;
+
+  try {
+    const response = await fetch('https://api.tavily.com/search', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        api_key: apiKey,
+        query: `${query} mechanical properties datasheet thermal properties`,
+        search_depth: "advanced",
+        max_results: 10,
+        include_images: false
+      })
+    });
+
+    const data = await response.json();
+    return data.results;
+  } catch (error) {
+    console.error('Tavily Hatası:', error);
+    return null;
+  }
+}
+
 
 export async function POST(req: Request) {
   let userQuery = 'Bilinmeyen Malzeme';
@@ -70,14 +94,21 @@ export async function POST(req: Request) {
       });
     }
 
+    // Step 1: Search the web for real data
+    const searchResults = await searchWeb(userQuery);
+    const context = searchResults 
+      ? JSON.stringify(searchResults.map((r: any) => ({ title: r.title, url: r.url, content: r.content })))
+      : "No real-time search results available. Use internal knowledge but prioritize deep links.";
+
+    // Step 2: Generate properties using LLM
     const completion = await openai.chat.completions.create({
       model: 'llama-3.3-70b-versatile',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: `Şu malzeme için özellikleri getir: ${userQuery}. Unutma, tam 10 farklı kaynak olmak zorunda.` }
+        { role: 'user', content: `SEARCH RESULTS:\n${context}\n\nMALZEME: ${userQuery}. Yukarıdaki arama sonuçlarını kullanarak tam 10 farklı satır veri getir.` }
       ],
       response_format: { type: "json_object" },
-      temperature: 0.2,
+      temperature: 0.1, // Lower temperature for more consistent extraction
     });
 
     const resultText = completion.choices[0].message.content;
