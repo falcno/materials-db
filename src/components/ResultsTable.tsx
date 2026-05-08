@@ -45,9 +45,10 @@ export default function ResultsTable({ data }: ResultsTableProps) {
   const renderProperty = (prop: MaterialProperty | null) => {
     if (!prop || !prop.value) return <span className={styles.missingData}>-</span>;
     return (
-      <span>
-        {prop.value} {prop.standard && <span style={{ fontSize: '0.85em', color: 'var(--text-secondary)' }}>({prop.standard})</span>}
-      </span>
+      <div className={styles.propertyValueWrapper}>
+        <span className={styles.propertyValue}>{prop.value}</span>
+        {prop.standard && <span className={styles.propertyStandard}>{prop.standard}</span>}
+      </div>
     );
   };
 
@@ -103,8 +104,14 @@ export default function ResultsTable({ data }: ResultsTableProps) {
                     <td className={styles.td}>{renderProperty(row.thermalExp)}</td>
                     <td className={styles.td}>
                       {row.sourceUrl ? (
-                        <a href={row.sourceUrl} target="_blank" rel="noopener noreferrer" className={styles.sourceLink}>
-                          {row.sourceName}
+                        <a 
+                          href={row.sourceUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className={styles.sourceBtn}
+                          title={row.sourceName}
+                        >
+                          Kaynağa Git
                         </a>
                       ) : (
                         <span className={styles.sourceText}>{row.sourceName}</span>
