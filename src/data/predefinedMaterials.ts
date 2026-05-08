@@ -136,6 +136,104 @@ export const PREDEFINED_MATERIALS: MaterialCategory[] = [
             sourceUrl: 'https://www.asminternational.org/materials-resources/handbooks' 
           }
         ]
+      },
+      {
+        name: 'PH 17-4',
+        alternateNames: ['1.4542', 'UNS S17400', 'AISI 630', 'Type 630'],
+        data: [
+          { 
+            id: 'ph17-4-ati-h900', 
+            materialName: '17-4 PH', 
+            productionMethod: 'İşlenmiş (Çubuk/Levha)', 
+            heatTreatment: 'H900', 
+            yieldStrength: { value: '1170-1240 MPa', standard: 'ASTM A564' }, 
+            uts: { value: '1310-1380 MPa', standard: 'ASTM A564' }, 
+            eModule: { value: '197 GPa', standard: '' }, 
+            poisson: { value: '0.27', standard: '' }, 
+            density: { value: '7.8 g/cm³', standard: '' }, 
+            shearModule: { value: '77 GPa', standard: '' }, 
+            thermalExp: { value: '10.8 µm/m-K', standard: '' }, 
+            sourceName: 'ATI Metals - 17-4 PH Technical Data Sheet', 
+            sourceUrl: 'https://www.atimaterials.com/Products/Documents/datasheets/stainless-steel/precipitation-hardening/17-4%20PH%20Datasheet.pdf' 
+          },
+          { 
+            id: 'ph17-4-ati-h1150', 
+            materialName: '17-4 PH', 
+            productionMethod: 'İşlenmiş', 
+            heatTreatment: 'H1150', 
+            yieldStrength: { value: '725 MPa', standard: 'ASTM A564' }, 
+            uts: { value: '930 MPa', standard: 'ASTM A564' }, 
+            eModule: { value: '197 GPa', standard: '' }, 
+            poisson: { value: '0.27', standard: '' }, 
+            density: { value: '7.8 g/cm³', standard: '' }, 
+            shearModule: { value: '77 GPa', standard: '' }, 
+            thermalExp: { value: '11.1 µm/m-K', standard: '' }, 
+            sourceName: 'AK Steel / Cleveland-Cliffs - 17-4 PH Data', 
+            sourceUrl: 'https://www.aksteel.nl/wp-content/uploads/2016/09/Armco-17-4-PH-Stainless-Steel.pdf' 
+          }
+        ]
+      }
+    ]
+  },
+  {
+    name: 'Polimerler',
+    materials: [
+      {
+        name: 'Delrin',
+        alternateNames: ['POM-H', 'Asetal Homopolimer', 'Polyoxymethylene'],
+        data: [
+          { 
+            id: 'delrin-150-jbm', 
+            materialName: 'Delrin 150', 
+            productionMethod: 'Ekstrüzyon (Çubuk/Levha)', 
+            heatTreatment: 'Isıl İşlem Yok', 
+            yieldStrength: { value: '75-76 MPa', standard: 'ASTM D638' }, 
+            uts: { value: '75-76 MPa', standard: 'ASTM D638' }, 
+            eModule: { value: '3.1 GPa', standard: '' }, 
+            poisson: { value: '0.35', standard: '' }, 
+            density: { value: '1.42 g/cm³', standard: '' }, 
+            shearModule: { value: '1.1 GPa', standard: '' }, 
+            thermalExp: { value: '110 µm/m-K', standard: '' }, 
+            sourceName: 'Journal of Biomedical Materials Research - DOI: 10.1002/jbm.820190505', 
+            sourceUrl: 'https://doi.org/10.1002/jbm.820190505' 
+          },
+          { 
+            id: 'delrin-150-handbook', 
+            materialName: 'Delrin 150', 
+            productionMethod: 'Enjeksiyon Kalıplama', 
+            heatTreatment: 'Isıl İşlem Yok', 
+            yieldStrength: { value: '71 MPa', standard: 'ISO 527' }, 
+            uts: { value: '71 MPa', standard: 'ISO 527' }, 
+            eModule: { value: '3.0 GPa', standard: '' }, 
+            poisson: { value: '0.35', standard: '' }, 
+            density: { value: '1.42 g/cm³', standard: '' }, 
+            shearModule: { value: '1.1 GPa', standard: '' }, 
+            thermalExp: { value: '110 µm/m-K', standard: '' }, 
+            sourceName: 'Polyoxymethylene Handbook - DOI: 10.1002/9781118914458.ch9', 
+            sourceUrl: 'https://doi.org/10.1002/9781118914458.ch9' 
+          }
+        ]
+      },
+      {
+        name: 'HDPE',
+        alternateNames: ['High-Density Polyethylene', 'PE-HD', 'PE100', 'Polietilen'],
+        data: [
+          { 
+            id: 'hdpe-pe100-plus', 
+            materialName: 'HDPE PE100', 
+            productionMethod: 'Ekstrüzyon (Boru)', 
+            heatTreatment: 'Isıl İşlem Yok', 
+            yieldStrength: { value: '23-26 MPa', standard: 'ISO 527' }, 
+            uts: { value: '32-35 MPa', standard: 'ISO 527' }, 
+            eModule: { value: '1000-1300 MPa', standard: 'ISO 178' }, 
+            poisson: { value: '0.40', standard: '' }, 
+            density: { value: '0.95-0.96 g/cm³', standard: 'ISO 1183' }, 
+            shearModule: { value: '0.4 GPa', standard: '' }, 
+            thermalExp: { value: '130-180 µm/m-K', standard: '' }, 
+            sourceName: 'PE100+ Association - Technical Specifications', 
+            sourceUrl: 'https://www.pe100plus.com/' 
+          }
+        ]
       }
     ]
   }

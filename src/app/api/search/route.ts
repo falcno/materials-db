@@ -26,8 +26,9 @@ CRITICAL RULES:
 4. QUANTITY: Provide exactly 10 distinct sources.
 5. LANGUAGE: All output text (except titles/DOIs) MUST be in Turkish. Use comma as decimal separator.
 6. TURKISH TERMS: Use "Kuma Döküm", "Dövme", "Haddeleme", "Tavlanmış", "Isıl İşlem Yok" etc.
+7. Output MUST be valid JSON format.
 
-Schema:
+Schema (JSON):
 {
   "data": [
     {
@@ -109,7 +110,7 @@ export async function POST(req: Request) {
       model: 'llama-3.3-70b-versatile',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: `SEARCH RESULTS:\n${context}\n\nMALZEME: ${userQuery}. Yukarıdaki arama sonuçlarını kullanarak tam 10 farklı satır veri getir.` }
+        { role: 'user', content: `SEARCH RESULTS:\n${context}\n\nMALZEME: ${userQuery}. Yukarıdaki arama sonuçlarını kullanarak tam 10 farklı satır veriyi JSON formatında getir.` }
       ],
       response_format: { type: "json_object" },
       temperature: 0.1, // Lower temperature for more consistent extraction
