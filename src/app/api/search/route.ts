@@ -14,10 +14,11 @@ Your job is to provide exact mechanical and thermal properties for a requested m
 CRITICAL RULES:
 1. You MUST provide exactly 10 distinct rows/objects in the JSON array.
 2. PRODUCTION METHODS & HEAT TREATMENTS: This is vital. For each source, identify the specific production method (e.g., Sand Casting, Investment Casting, Forging, Rolling, Injection Molding, 3D Printing) and heat treatment (e.g., Annealed, T6, No Heat Treatment).
-3. SOURCE NAMES: Be very descriptive. e.g., "MatWeb - AISI 316L Sand Cast Datasheet".
-4. SOURCE LINKS: Provide deep links (direct URLs) to the specific material datasheet.
-5. ALL OUTPUT TEXT MUST BE IN TURKISH. Use Turkish decimal formats and SI units. 
-6. Output MUST be valid JSON.
+3. ALTERNATE NAMES: For the requested material, always list its common equivalents or standard codes (e.g., DIN, EN, UNS, AISI) in the alternateNames field.
+4. SOURCE NAMES: Be very descriptive. e.g., "MatWeb - AISI 316L Sand Cast Datasheet".
+5. SOURCE LINKS: Provide deep links (direct URLs) to the specific material datasheet.
+6. ALL OUTPUT TEXT MUST BE IN TURKISH. Use Turkish decimal formats and SI units. 
+7. Output MUST be valid JSON.
 
 Schema:
 {
@@ -25,6 +26,7 @@ Schema:
     {
       "id": "uuid",
       "materialName": "Malzeme Adı",
+      "alternateNames": ["Alternatif Ad 1", "Alternatif Ad 2"],
       "productionMethod": "Üretim Yöntemi (örn: Kuma Döküm, Dövme, Enjeksiyon)",
       "heatTreatment": "Isıl İşlem (örn: Tavlanmış, T6, Isıl İşlem Yok)",
       "yieldStrength": { "value": "değer ve birim", "standard": "standart veya boş" },
@@ -56,7 +58,7 @@ export async function POST(req: Request) {
 
     if (!process.env.GROQ_API_KEY || process.env.GROQ_API_KEY === 'dummy_key') {
       console.warn('GROQ_API_KEY bulunamadı. Örnek veri döndürülüyor.');
-      await new Promise((resolve) => setTimeout(resolve, 500)); // Reduced delay
+      await new Promise((resolve) => setTimeout(resolve, 500)); 
       return NextResponse.json({ 
         warning: 'Sistemde GROQ_API_KEY bulunamadığı için gerçek yapay zeka araması yapılamıyor. Aşağıdaki veriler temsilidir.',
         data: generateMockData(userQuery) 
@@ -92,7 +94,6 @@ export async function POST(req: Request) {
 
   } catch (error: any) {
     console.error('API Hatası:', error);
-    console.warn('Hatadan dolayı örnek veriye (fallback) geçiliyor.');
     return NextResponse.json({ 
       warning: `Yapay zeka servisi hata verdi (Groq: ${error.message}). Temsili veriler gösteriliyor.`,
       data: generateMockData(userQuery) 
@@ -119,6 +120,7 @@ function generateMockData(query: string) {
   return sources.map((source, index) => ({
     id: `mock-${index}`,
     materialName: query.toUpperCase(),
+    alternateNames: [query.toUpperCase() + '-ALT'],
     productionMethod: index < 5 ? 'Kuma Döküm' : 'Hassas Döküm',
     heatTreatment: index % 2 === 0 ? 'Tavlanmış' : 'Isıl İşlem Yok',
     yieldStrength: { value: `${200 + (qLen * 10) + (index * 5)} MPa`, standard: 'ASTM E8' },

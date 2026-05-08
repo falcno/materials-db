@@ -1,55 +1,96 @@
-.container {
-    display: flex;
-    min-height: calc(100vh - 70px);
+.pageLayout {
+  display: flex;
+  min-height: calc(100vh - 80px);
+  width: 100%;
 }
 
-.main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
-    width: 100%;
+.sidebarSection {
+  width: 300px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 80px;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .hero {
-    text-align: center;
-    margin-bottom: 3rem;
-    padding: 3rem 1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem 1rem;
 }
 
 .title {
-    font-size: 3rem;
-    color: var(--milpod-green);
-    margin-bottom: 1rem;
-    letter-spacing: -0.05em;
+  font-size: 2.5rem;
+  color: var(--milpod-green);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.05em;
 }
 
 .subtitle {
-    font-size: 1.2rem;
-    color: #666;
-    max-width: 800px;
-    margin: 0 auto;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .loader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 4rem 0;
+  gap: 1rem;
+  color: var(--milpod-green);
 }
 
 .spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-left-color: var(--milpod-green);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(10, 60, 42, 0.1);
+  border-left-color: var(--milpod-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 1024px) {
+  .pageLayout {
+    flex-direction: column;
+  }
+  
+  .sidebarSection {
+    width: 100%;
+    position: static;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .mainContent {
+    padding: 2rem 1rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .title {
+    color: var(--text-primary);
+  }
+  .spinner {
+    border-color: rgba(39, 197, 138, 0.2);
+    border-left-color: var(--milpod-accent);
+  }
 }
