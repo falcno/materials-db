@@ -13,11 +13,11 @@ Your job is to provide exact mechanical and thermal properties for a requested m
 
 CRITICAL RULES:
 1. You MUST provide exactly 10 distinct rows/objects in the JSON array.
-2. PRODUCTION METHODS & HEAT TREATMENTS: This is vital. For each source, identify the specific production method (e.g., Sand Casting, Investment Casting, Forging, Rolling, Injection Molding, 3D Printing) and heat treatment (e.g., Annealed, T6, No Heat Treatment).
+2. PRODUCTION METHODS & HEAT TREATMENTS: Use ONLY Turkish terms. (e.g., Kuma Döküm, Hassas Döküm, Dövme, Haddeleme, Enjeksiyon Kalıplama, 3D Yazıcı, Tavlanmış, T6, Isıl İşlem Yok).
 3. ALTERNATE NAMES: For the requested material, always list its common equivalents or standard codes (e.g., DIN, EN, UNS, AISI) in the alternateNames field.
 4. SOURCE NAMES: Be very descriptive. e.g., "MatWeb - AISI 316L Sand Cast Datasheet".
-5. SOURCE LINKS: Provide deep links (direct URLs) to the specific material datasheet.
-6. ALL OUTPUT TEXT MUST BE IN TURKISH. Use Turkish decimal formats and SI units. 
+5. SOURCE LINKS: Provide DEEP LINKS (direct URLs) to the specific material datasheet. DO NOT just provide the homepage URL. If you don't know the exact deep link, try to construct a plausible one for MatWeb or similar databases based on common URL patterns, or prioritize sources where deep linking is known.
+6. ALL OUTPUT TEXT MUST BE IN TURKISH. Use Turkish decimal formats (comma as decimal separator) and SI units. 
 7. Output MUST be valid JSON.
 
 Schema:
@@ -27,8 +27,8 @@ Schema:
       "id": "uuid",
       "materialName": "Malzeme Adı",
       "alternateNames": ["Alternatif Ad 1", "Alternatif Ad 2"],
-      "productionMethod": "Üretim Yöntemi (örn: Kuma Döküm, Dövme, Enjeksiyon)",
-      "heatTreatment": "Isıl İşlem (örn: Tavlanmış, T6, Isıl İşlem Yok)",
+      "productionMethod": "Üretim Yöntemi",
+      "heatTreatment": "Isıl İşlem",
       "yieldStrength": { "value": "değer ve birim", "standard": "standart veya boş" },
       "uts": { "value": "değer ve birim", "standard": "standart veya boş" },
       "eModule": { "value": "değer ve birim", "standard": "standart veya boş" },
@@ -103,16 +103,16 @@ export async function POST(req: Request) {
 
 function generateMockData(query: string) {
   const sources = [
-    { name: 'MatWeb', url: 'https://www.matweb.com' },
-    { name: 'ASM Malzeme Veri Sayfası', url: 'https://aerospacemetals.com' },
-    { name: 'AZoM - Materials', url: 'https://www.azom.com' },
-    { name: 'MakeItFrom', url: 'https://www.makeitfrom.com' },
-    { name: 'Tedarikçi Veri Föyü (Protolabs)', url: 'https://www.protolabs.com' },
-    { name: 'Malzeme El Kitabı (Smith)', url: '' },
-    { name: 'ISO 6892-1 Teknik Raporu', url: '' },
-    { name: 'Mühendislik Araç Kutusu', url: 'https://www.engineeringtoolbox.com' },
-    { name: 'Tedarikçi Veri Föyü (Xometry)', url: 'https://www.xometry.com' },
-    { name: 'NIST Özellikler Veritabanı', url: 'https://www.nist.gov' },
+    { name: 'MatWeb - Material Property Data', url: 'https://www.matweb.com/search/MaterialGroupSearch.aspx' },
+    { name: 'ASM Material Property Data', url: 'https://aerospacemetals.com/alloys/' },
+    { name: 'AZoM - Materials Information', url: 'https://www.azom.com/materials.aspx' },
+    { name: 'MakeItFrom - Material Database', url: 'https://www.makeitfrom.com/material-properties/' },
+    { name: 'Xometry Material Guide', url: 'https://www.xometry.com/resources/materials/' },
+    { name: 'Protolabs Material Data', url: 'https://www.protolabs.com/resources/materials/' },
+    { name: 'NIST Material Measurement Laboratory', url: 'https://www.nist.gov/mml' },
+    { name: 'Engineering Toolbox', url: 'https://www.engineeringtoolbox.com/metal-alloys-densities-d_50.html' },
+    { name: 'Matmatch Material Search', url: 'https://matmatch.com/search' },
+    { name: 'Sandmeyer Steel Company Datasheets', url: 'https://www.sandmeyersteel.com/stainless-steel-nickel-alloy-datasheets.html' },
   ];
 
   const qLen = query.length || 5;

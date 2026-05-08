@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from './ResultsTable.module.css';
+import { Download } from 'lucide-react';
+import { exportToExcel } from '../utils/exportToExcel';
 
 export interface MaterialProperty {
   value: string;
@@ -49,8 +51,22 @@ export default function ResultsTable({ data }: ResultsTableProps) {
     );
   };
 
+  const materialName = data[0]?.materialName || 'Malzeme';
+
+  const handleExport = () => {
+    exportToExcel(data, `${materialName}_Veri_Sayfasi`);
+  };
+
   return (
     <div className={styles.resultsWrapper}>
+      <div className={styles.tableHeaderArea}>
+        <h2 className={styles.mainResultsTitle}>{materialName} Özellikleri</h2>
+        <button className={styles.exportButton} onClick={handleExport}>
+          <Download size={18} />
+          <span>Dışa Aktar (Excel)</span>
+        </button>
+      </div>
+      
       {Object.keys(groupedData).map((method) => (
         <div key={method} className={styles.categorySection}>
           <h2 className={styles.categoryTitle}>{method}</h2>
