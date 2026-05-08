@@ -80,6 +80,7 @@ export default function ResultsTable({ data }: ResultsTableProps) {
                   <th className={styles.th}>Akma Dayanımı</th>
                   <th className={styles.th}>Çekme Dayanımı</th>
                   <th className={styles.th}>Elastisite Modülü</th>
+                  <th className={styles.th}>Poisson Oranı</th>
                   <th className={styles.th}>Yoğunluk</th>
                   <th className={styles.th}>Termal Genleşme</th>
                   <th className={styles.th}>Kaynak</th>
@@ -100,6 +101,7 @@ export default function ResultsTable({ data }: ResultsTableProps) {
                     <td className={styles.td}>{renderProperty(row.yieldStrength)}</td>
                     <td className={styles.td}>{renderProperty(row.uts)}</td>
                     <td className={styles.td}>{renderProperty(row.eModule)}</td>
+                    <td className={styles.td}>{renderProperty(row.poisson)}</td>
                     <td className={styles.td}>{renderProperty(row.density)}</td>
                     <td className={styles.td}>{renderProperty(row.thermalExp)}</td>
                     <td className={styles.td}>
